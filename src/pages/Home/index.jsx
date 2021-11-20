@@ -7,9 +7,10 @@ import {
   Container,
   Button,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import landingImg from "../../assets/imgs/landing.png";
+import { getWindowDimensions } from "../../utils/getWidth";
 
 const Home = () => {
   const theme = useTheme();
@@ -17,6 +18,28 @@ const Home = () => {
   useEffect(() => {
     document.title = "Lenxt";
   }, []);
+
+  const [flexDir, setFlexDir] = useState("row");
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowDimensions(getWindowDimensions());
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [windowDimensions]);
+
+  useEffect(() => {
+    if (windowDimensions < 900) {
+      setFlexDir("column-reverse");
+    } else {
+      setFlexDir("row");
+    }
+  }, [windowDimensions]);
   return (
     <>
       <Box sx={{ background: "#f7f9fe" }}>
@@ -24,6 +47,7 @@ const Home = () => {
           container
           spacing={2}
           sx={{ minHeight: "100vh", justifyContent: "center" }}
+          direction={flexDir}
         >
           <Grid
             item
@@ -56,7 +80,7 @@ const Home = () => {
                 eligendi minima non et consequuntur repellendus. Aperiam
                 consectetur amet nemo maxime molestias rem praesentium.
               </Typography>
-              <Link  to="/auth/signup">
+              <Link to="/auth/signup">
                 <Button
                   variant="contained"
                   sx={[

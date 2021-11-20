@@ -17,11 +17,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { Link as RLink, useNavigate } from "react-router-dom";
-
-const getWindowDimensions = () => {
-  const width = window.innerWidth;
-  return width;
-};
+import { getWindowDimensions } from "../../utils/getWidth";
 
 const SignUp = () => {
   const theme = useTheme();
