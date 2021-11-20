@@ -14,8 +14,9 @@ import {
   Checkbox,
   Alert,
   CircularProgress,
+  useTheme,
 } from "@mui/material";
-import { Link as RLink } from "react-router-dom";
+import { Link as RLink, useNavigate } from "react-router-dom";
 
 const getWindowDimensions = () => {
   const width = window.innerWidth;
@@ -23,6 +24,8 @@ const getWindowDimensions = () => {
 };
 
 const SignUp = () => {
+  const theme = useTheme();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -74,6 +77,9 @@ const SignUp = () => {
         });
         setSubmit(false);
       }, 5000);
+      setTimeout(() => {
+        navigate("/");
+      }, 6000);
     } else {
       setErrPswd(true);
     }
@@ -106,7 +112,12 @@ const SignUp = () => {
 
   return (
     <>
-      <Grid container spacing={2} direction={flexDir}>
+      <Grid
+        container
+        spacing={2}
+        direction={flexDir}
+        sx={{ minHeight: "100vh" }}
+      >
         <Grid
           item
           md={6}
@@ -127,7 +138,12 @@ const SignUp = () => {
               }}
             >
               <Typography component="h1" variant="h5">
-                Welcome to <b style={{ fontWeight: 600 }}>LENXT</b>
+                Welcome to{" "}
+                <b
+                  style={{ fontWeight: 600, color: theme.palette.primary.main }}
+                >
+                  LENXT
+                </b>
               </Typography>
               <Typography component="h2" variant="h5">
                 Create an Account

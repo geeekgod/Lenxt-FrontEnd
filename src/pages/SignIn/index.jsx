@@ -13,10 +13,13 @@ import {
   FormGroup,
   Checkbox,
   CircularProgress,
+  useTheme,
 } from "@mui/material";
-import { Link as RLink } from "react-router-dom";
+import { Link as RLink, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
+  const theme = useTheme();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -48,7 +51,10 @@ const SignIn = () => {
         password: password,
       });
       setSubmit(false);
-    }, 3000);
+    }, 5000);
+    setTimeout(() => {
+      navigate("/");
+    }, 6000);
   };
 
   useEffect(() => {
@@ -57,7 +63,7 @@ const SignIn = () => {
 
   return (
     <>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} sx={{ minHeight: "100vh" }}>
         <Grid
           item
           md={6}
@@ -80,7 +86,12 @@ const SignIn = () => {
               }}
             >
               <Typography component="h1" variant="h5">
-                Welcome Back to <b style={{ fontWeight: 600 }}>LENXT</b>
+                Welcome Back to{" "}
+                <b
+                  style={{ fontWeight: 600, color: theme.palette.primary.main }}
+                >
+                  LENXT
+                </b>
               </Typography>
               <Typography component="h2" variant="h5">
                 Sign to your account
