@@ -8,8 +8,14 @@ import { LockOpen } from "@mui/icons-material";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import signUpImg from "../../assets/imgs/signup.png";
-import { FormControlLabel, FormGroup, Checkbox, Alert, CircularProgress } from "@mui/material";
-import { Link as RLink } from "react-router-dom"
+import {
+  FormControlLabel,
+  FormGroup,
+  Checkbox,
+  Alert,
+  CircularProgress,
+} from "@mui/material";
+import { Link as RLink } from "react-router-dom";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -22,26 +28,34 @@ const SignUp = () => {
   const [submit, setSubmit] = useState(false);
 
   useEffect(() => {
+    const cnfPssLen = cnfPassword.length;
+    const pssLen = password.length;
+    const nameLen = name.length;
     if (
       email !== "" &&
       email !== " " &&
       name !== "" &&
       name !== " " &&
-      name.length > 7 &&
       password !== "" &&
       password !== " " &&
-      password.length > 7 &&
       cnfPassword !== "" &&
-      cnfPassword !== " " &&
-      cnfPassword.length > 7 &&
-      email.indexOf("@") != -1 &&
-      email.indexOf(".") != -1
+      cnfPassword !== " "
     ) {
-      setDisableLogin(false);
+      if (
+        nameLen > 7 &&
+        pssLen > 7 &&
+        cnfPssLen > 7 &&
+        email.indexOf("@") != -1 &&
+        email.indexOf(".") != -1
+      ) {
+        setDisableLogin(false);
+      } else {
+        setDisableLogin(true);
+      }
     } else {
       setDisableLogin(true);
     }
-  }, [email, password]);
+  }, [email, password, cnfPassword, name]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -54,8 +68,7 @@ const SignUp = () => {
         });
         setSubmit(false);
       }, 5000);
-    }
-    else {
+    } else {
       setErrPswd(true);
     }
   };
@@ -75,7 +88,7 @@ const SignUp = () => {
                 flexDirection: "column",
                 alignItems: "center",
                 marginTop: 10,
-                marginBottom: 10
+                marginBottom: 10,
               }}
             >
               <Typography component="h1" variant="h5">
@@ -130,7 +143,7 @@ const SignUp = () => {
                   onChange={(e) => {
                     setPassword(e.target.value);
                     if (errPswd === true) {
-                      setErrPswd(false)
+                      setErrPswd(false);
                     }
                   }}
                   error={errPswd}
@@ -147,22 +160,24 @@ const SignUp = () => {
                   onChange={(e) => {
                     setCnfPassword(e.target.value);
                     if (errPswd === true) {
-                      setErrPswd(false)
+                      setErrPswd(false);
                     }
                   }}
                   error={errPswd}
                 />
-                {errPswd ? (<Alert severity="error">Both password should be same</Alert>) : null}
+                {errPswd ? (
+                  <Alert severity="error">Both password should be same</Alert>
+                ) : null}
                 <Button
                   type="submit"
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
                   disableElevation
-                  disabled={submit ? false : disableLogin}
+                  disabled={submit ? true : disableLogin}
                   endIcon={submit ? null : <LockOpen />}
                 >
-                  {submit ? (<CircularProgress />) : "Register"}
+                  {submit ? <CircularProgress size={25} color="inherit" /> : "Register"}
                 </Button>
                 <FormGroup>
                   <FormControlLabel

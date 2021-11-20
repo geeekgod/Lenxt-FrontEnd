@@ -9,139 +9,139 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import signInImg from "../../assets/imgs/signin.png";
 import { FormControlLabel, FormGroup, Checkbox } from "@mui/material";
-import { Link as RLink } from "react-router-dom"
+import { Link as RLink } from "react-router-dom";
 
 const SignIn = () => {
-    const [showPassword, setShowPassword] = useState(false);
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [disableLogin, setDisableLogin] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [disableLogin, setDisableLogin] = useState(false);
 
-    useEffect(() => {
-        if (
-            email !== "" &&
-            email !== " " &&
-            password !== "" &&
-            password !== " " &&
-            password.length > 7 &&
-            email.indexOf("@") != -1 &&
-            email.indexOf(".") != -1
-        ) {
-            setDisableLogin(false);
-        } else {
-            setDisableLogin(true);
-        }
-    }, [email, password]);
+  useEffect(() => {
+    if (
+      email !== "" &&
+      email !== " " &&
+      password !== "" &&
+      password !== " " &&
+      password.length > 7 &&
+      email.indexOf("@") != -1 &&
+      email.indexOf(".") != -1
+    ) {
+      setDisableLogin(false);
+    } else {
+      setDisableLogin(true);
+    }
+  }, [email, password]);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log({
-            email: email,
-            password: password,
-        });
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log({
+      email: email,
+      password: password,
+    });
+  };
 
-    useEffect(() => {
-        document.title = "Sign In | Lenxt";
-    }, []);
+  useEffect(() => {
+    document.title = "Sign In | Lenxt";
+  }, []);
 
-    return (
-        <>
-            <Grid container spacing={2}>
-                <Grid item md={6}>
-                    <img src={signInImg} style={{ width: "100%" }} />
+  return (
+    <>
+      <Grid container spacing={2}>
+        <Grid item md={6}>
+          <img src={signInImg} style={{ width: "100%" }} />
+        </Grid>
+        <Grid item md={6} sx={{ justifyContent: "center", margin: "auto" }}>
+          <Container component="main" maxWidth="xs">
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                marginBottom: 10,
+              }}
+            >
+              <Typography component="h1" variant="h5">
+                Welcome Back to <b style={{ fontWeight: 600 }}>LENXT</b>
+              </Typography>
+              <Typography component="h2" variant="h5">
+                Sign to your account
+              </Typography>
+              <Box
+                component="form"
+                onSubmit={handleSubmit}
+                noValidate
+                sx={{ mt: 1, padding: 1 }}
+              >
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  autoComplete="current-password"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  disableElevation
+                  disabled={disableLogin}
+                  endIcon={<Login />}
+                >
+                  Sign In
+                </Button>
+                <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={showPassword}
+                        onChange={() => {
+                          setShowPassword(!showPassword);
+                        }}
+                      />
+                    }
+                    label="Show Password"
+                  />
+                </FormGroup>
+                <Grid container>
+                  <Grid item xs></Grid>
+                  <Grid item>
+                    <RLink to="/auth/signup">
+                      <Link href="#" variant="body2">
+                        {"Don't have an account? Sign Up"}
+                      </Link>
+                    </RLink>
+                  </Grid>
                 </Grid>
-                <Grid item md={6} sx={{ justifyContent: "center", margin: "auto" }}>
-                    <Container component="main" maxWidth="xs">
-                        <Box
-                            sx={{
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "center",
-                                marginBottom: 10
-                            }}
-                        >
-                            <Typography component="h1" variant="h5">
-                                Welcome Back to <b style={{ fontWeight: 600 }}>LENXT</b>
-                            </Typography>
-                            <Typography component="h2" variant="h5">
-                                Sign to your account
-            </Typography>
-                            <Box
-                                component="form"
-                                onSubmit={handleSubmit}
-                                noValidate
-                                sx={{ mt: 1, padding: 1 }}
-                            >
-                                <TextField
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    id="email"
-                                    label="Email Address"
-                                    name="email"
-                                    autoComplete="email"
-                                    autoFocus
-                                    value={email}
-                                    onChange={(e) => {
-                                        setEmail(e.target.value);
-                                    }}
-                                />
-                                <TextField
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    name="password"
-                                    label="Password"
-                                    type={showPassword ? "text" : "password"}
-                                    id="password"
-                                    autoComplete="current-password"
-                                    value={password}
-                                    onChange={(e) => {
-                                        setPassword(e.target.value);
-                                    }}
-                                />
-                                <Button
-                                    type="submit"
-                                    fullWidth
-                                    variant="contained"
-                                    sx={{ mt: 3, mb: 2 }}
-                                    disableElevation
-                                    disabled={disableLogin}
-                                    endIcon={<Login />}
-                                >
-                                    Sign In
-              </Button>
-                                <FormGroup>
-                                    <FormControlLabel
-                                        control={
-                                            <Checkbox
-                                                checked={showPassword}
-                                                onChange={() => {
-                                                    setShowPassword(!showPassword);
-                                                }}
-                                            />
-                                        }
-                                        label="Show Password"
-                                    />
-                                </FormGroup>
-                                <Grid container>
-                                    <Grid item xs></Grid>
-                                    <Grid item>
-                                        <RLink to="/auth/signup">
-                                            <Link href="#" variant="body2">
-                                                {"Don't have an account? Sign Up"}
-                                            </Link>
-                                        </RLink>
-                                    </Grid>
-                                </Grid>
-                            </Box>
-                        </Box>
-                    </Container>
-                </Grid>
-            </Grid>
-        </>
-    );
-}
+              </Box>
+            </Box>
+          </Container>
+        </Grid>
+      </Grid>
+    </>
+  );
+};
 
 export default SignIn;
