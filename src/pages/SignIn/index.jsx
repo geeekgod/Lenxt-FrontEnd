@@ -58,8 +58,16 @@ const SignIn = () => {
   return (
     <>
       <Grid container spacing={2}>
-        <Grid item md={6}>
-          <img src={signInImg} style={{ width: "100%" }} alt={"Sign In Image"} />
+        <Grid
+          item
+          md={6}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <img src={signInImg} style={{ width: "90%" }} alt={"Sign In Image"} />
         </Grid>
         <Grid item md={6} sx={{ justifyContent: "center", margin: "auto" }}>
           <Container component="main" maxWidth="xs">
@@ -68,7 +76,7 @@ const SignIn = () => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                marginBottom: 10,
+                marginBottom: 2,
               }}
             >
               <Typography component="h1" variant="h5">

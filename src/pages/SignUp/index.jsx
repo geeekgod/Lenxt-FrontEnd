@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
@@ -17,6 +17,11 @@ import {
 } from "@mui/material";
 import { Link as RLink } from "react-router-dom";
 
+const getWindowDimensions = () => {
+  const width = window.innerWidth;
+  return width;
+};
+
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
@@ -26,6 +31,7 @@ const SignUp = () => {
   const [disableLogin, setDisableLogin] = useState(false);
   const [errPswd, setErrPswd] = useState(false);
   const [submit, setSubmit] = useState(false);
+  const [flexDir, setFlexDir] = useState("row");
 
   useEffect(() => {
     const cnfPssLen = cnfPassword.length;
@@ -77,18 +83,47 @@ const SignUp = () => {
     document.title = "Sign Up | Lenxt";
   }, []);
 
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowDimensions(getWindowDimensions());
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [windowDimensions]);
+
+  useEffect(() => {
+    if (windowDimensions < 900) {
+      setFlexDir("column-reverse");
+    } else {
+      setFlexDir("row");
+    }
+  }, [windowDimensions]);
+
   return (
     <>
-      <Grid container spacing={2}>
-        <Grid item md={6} sx={{ justifyContent: "center", margin: "auto" }}>
+      <Grid container spacing={2} direction={flexDir}>
+        <Grid
+          item
+          md={6}
+          sx={{
+            justifyContent: "center",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
           <Container component="main" maxWidth="xs">
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                marginTop: 10,
-                marginBottom: 10,
+                marginTop: flexDir === "row" ? 10 : 2,
+                marginBottom: flexDir === "row" ? 10 : 2,
               }}
             >
               <Typography component="h1" variant="h5">
@@ -177,7 +212,11 @@ const SignUp = () => {
                   disabled={submit ? true : disableLogin}
                   endIcon={submit ? null : <LockOpen />}
                 >
-                  {submit ? <CircularProgress size={25} color="inherit" /> : "Register"}
+                  {submit ? (
+                    <CircularProgress size={25} color="inherit" />
+                  ) : (
+                    "Register"
+                  )}
                 </Button>
                 <FormGroup>
                   <FormControlLabel
@@ -206,8 +245,16 @@ const SignUp = () => {
             </Box>
           </Container>
         </Grid>
-        <Grid item md={6}>
-          <img src={signUpImg} style={{ width: "100%" }} alt={"Sign Up image"} />
+        <Grid
+          item
+          md={6}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <img src={signUpImg} style={{ width: "90%" }} alt={"Sign Up image"} />
         </Grid>
       </Grid>
     </>
