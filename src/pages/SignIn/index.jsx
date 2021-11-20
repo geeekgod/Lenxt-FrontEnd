@@ -8,7 +8,12 @@ import { Login } from "@mui/icons-material";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import signInImg from "../../assets/imgs/signin.png";
-import { FormControlLabel, FormGroup, Checkbox } from "@mui/material";
+import {
+  FormControlLabel,
+  FormGroup,
+  Checkbox,
+  CircularProgress,
+} from "@mui/material";
 import { Link as RLink } from "react-router-dom";
 
 const SignIn = () => {
@@ -16,6 +21,7 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [disableLogin, setDisableLogin] = useState(false);
+  const [submit, setSubmit] = useState(false);
 
   useEffect(() => {
     if (
@@ -24,8 +30,8 @@ const SignIn = () => {
       password !== "" &&
       password !== " " &&
       password.length > 7 &&
-      email.indexOf("@") != -1 &&
-      email.indexOf(".") != -1
+      email.indexOf("@") !== -1 &&
+      email.indexOf(".") !== -1
     ) {
       setDisableLogin(false);
     } else {
@@ -35,10 +41,14 @@ const SignIn = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({
-      email: email,
-      password: password,
-    });
+    setSubmit(true);
+    setTimeout(() => {
+      console.log({
+        email: email,
+        password: password,
+      });
+      setSubmit(false);
+    }, 3000);
   };
 
   useEffect(() => {
@@ -49,7 +59,7 @@ const SignIn = () => {
     <>
       <Grid container spacing={2}>
         <Grid item md={6}>
-          <img src={signInImg} style={{ width: "100%" }} />
+          <img src={signInImg} style={{ width: "100%" }} alt={"Sign In Image"} />
         </Grid>
         <Grid item md={6} sx={{ justifyContent: "center", margin: "auto" }}>
           <Container component="main" maxWidth="xs">
@@ -107,10 +117,14 @@ const SignIn = () => {
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
                   disableElevation
-                  disabled={disableLogin}
-                  endIcon={<Login />}
+                  disabled={submit ? true : disableLogin}
+                  endIcon={submit ? null : <Login />}
                 >
-                  Sign In
+                  {submit ? (
+                    <CircularProgress size={25} color="inherit" />
+                  ) : (
+                    "Sign In"
+                  )}
                 </Button>
                 <FormGroup>
                   <FormControlLabel

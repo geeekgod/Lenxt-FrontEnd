@@ -45,8 +45,8 @@ const SignUp = () => {
         nameLen > 7 &&
         pssLen > 7 &&
         cnfPssLen > 7 &&
-        email.indexOf("@") != -1 &&
-        email.indexOf(".") != -1
+        email.indexOf("@") !== -1 &&
+        email.indexOf(".") !== -1
       ) {
         setDisableLogin(false);
       } else {
@@ -155,7 +155,7 @@ const SignUp = () => {
                   name="cnfPassword"
                   label="Confirm Password"
                   type={showPassword ? "text" : "password"}
-                  id="password"
+                  id="cnfPassword"
                   value={cnfPassword}
                   onChange={(e) => {
                     setCnfPassword(e.target.value);
@@ -207,7 +207,7 @@ const SignUp = () => {
           </Container>
         </Grid>
         <Grid item md={6}>
-          <img src={signUpImg} style={{ width: "100%" }} />
+          <img src={signUpImg} style={{ width: "100%" }} alt={"Sign Up image"} />
         </Grid>
       </Grid>
     </>
