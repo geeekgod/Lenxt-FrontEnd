@@ -8,12 +8,13 @@ import {
   Button,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import landingImg from "../../assets/imgs/landing.png";
 import { getWindowDimensions } from "../../utils/getWidth";
 
 const Home = () => {
   const theme = useTheme();
+  const navigation = useNavigate();
 
   useEffect(() => {
     document.title = "Lenxt";
@@ -42,7 +43,7 @@ const Home = () => {
   }, [windowDimensions]);
   return (
     <>
-      <Box sx={{ background: "#f7f9fe" }}>
+      <Box>
         <Grid
           container
           spacing={2}
@@ -80,31 +81,34 @@ const Home = () => {
                 eligendi minima non et consequuntur repellendus. Aperiam
                 consectetur amet nemo maxime molestias rem praesentium.
               </Typography>
-              <Link to="/auth/signup">
-                <Button
-                  variant="contained"
-                  sx={[
-                    {
-                      paddingTop: 1.4,
-                      paddingBottom: 1.4,
-                      marginTop: 3.4,
-                      fontSize: 14.7,
-                      paddingLeft: 3,
-                      paddingRight: 3,
+              <Button
+                variant="contained"
+                sx={[
+                  {
+                    paddingTop: 1.4,
+                    paddingBottom: 1.4,
+                    marginTop: 3.4,
+                    fontSize: 14.7,
+                    paddingLeft: 3,
+                    paddingRight: 3,
+                  },
+                  () => ({
+                    "&:hover": {
+                      transform: `translateY(-10px)`,
                     },
-                    () => ({
-                      "&:hover": {
-                        transform: `translateY(-10px)`,
-                      },
-                    }),
-                  ]}
-                  className="button-custom"
-                  disableElevation
-                  endIcon={<ArrowForwardIos />}
-                >
-                  Get Started
-                </Button>
-              </Link>
+                  }),
+                ]}
+                className="button-custom"
+                disableElevation
+                endIcon={<ArrowForwardIos />}
+                onClick={() => {
+                  setTimeout(() => {
+                    navigation("/auth/signup");
+                  }, 500);
+                }}
+              >
+                Get Started
+              </Button>
             </Container>
           </Grid>
           <Grid
