@@ -16,6 +16,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { Link as RLink, useNavigate } from "react-router-dom";
+import { lenxtApi } from "../../api/lenxtApi";
 
 const SignIn = () => {
   const theme = useTheme();
@@ -25,6 +26,7 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const [disableLogin, setDisableLogin] = useState(false);
   const [submit, setSubmit] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
     if (
@@ -45,16 +47,48 @@ const SignIn = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmit(true);
-    setTimeout(() => {
-      console.log({
+    // setTimeout(() => {
+    //   console.log({
+    //     email: email,
+    //     password: password,
+    //   });
+    //   setSubmit(false);
+    // }, 5000);
+    // setTimeout(() => {
+    //   navigate("/");
+    // }, 6000);
+    lenxtApi
+      .post("/auth/signin", {
         email: email,
         password: password,
+      })
+      .then((res) => {
+        if (res.data.err && res.data.err === "Incorrect Password") {
+          setErrorMsg("Incorrect Password");
+          console.log(errorMsg);
+        }
+        if (
+          res.data.message &&
+          res.data.message?.message === "Logged in!!"
+        ) {
+          setErrorMsg(null);
+          console.log(res.data);
+        }
+        setSubmit(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        if (errorMsg === null) {
+          if (
+            err.response.data &&
+            err.response.data === "User not found please register"
+          ) {
+            setErrorMsg("User doesn't exists please register");
+            console.log("err: ",errorMsg);
+          }
+        }
+        setSubmit(false);
       });
-      setSubmit(false);
-    }, 5000);
-    setTimeout(() => {
-      navigate("/");
-    }, 6000);
   };
 
   useEffect(() => {
@@ -76,7 +110,7 @@ const SignIn = () => {
           <img src={signInImg} style={{ width: "90%" }} alt={"Sign In Image"} />
         </Grid>
         <Grid item md={6} sx={{ justifyContent: "center", margin: "auto" }}>
-          <Container component="main" maxWidth="xs">
+          <Container component='main' maxWidth='xs'>
             <Box
               sx={{
                 display: "flex",
@@ -85,7 +119,7 @@ const SignIn = () => {
                 marginBottom: 2,
               }}
             >
-              <Typography component="h1" variant="h5">
+              <Typography component='h1' variant='h5'>
                 Welcome Back to{" "}
                 <b
                   style={{ fontWeight: 600, color: theme.palette.primary.main }}
@@ -93,23 +127,23 @@ const SignIn = () => {
                   LENXT
                 </b>
               </Typography>
-              <Typography component="h2" variant="h5">
+              <Typography component='h2' variant='h5'>
                 Sign to your account
               </Typography>
               <Box
-                component="form"
+                component='form'
                 onSubmit={handleSubmit}
                 noValidate
                 sx={{ mt: 1, padding: 1 }}
               >
                 <TextField
-                  margin="normal"
+                  margin='normal'
                   required
                   fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
+                  id='email'
+                  label='Email Address'
+                  name='email'
+                  autoComplete='email'
                   autoFocus
                   value={email}
                   onChange={(e) => {
@@ -117,30 +151,30 @@ const SignIn = () => {
                   }}
                 />
                 <TextField
-                  margin="normal"
+                  margin='normal'
                   required
                   fullWidth
-                  name="password"
-                  label="Password"
+                  name='password'
+                  label='Password'
                   type={showPassword ? "text" : "password"}
-                  id="password"
-                  autoComplete="current-password"
+                  id='password'
+                  autoComplete='current-password'
                   value={password}
                   onChange={(e) => {
                     setPassword(e.target.value);
                   }}
                 />
                 <Button
-                  type="submit"
+                  type='submit'
                   fullWidth
-                  variant="contained"
+                  variant='contained'
                   sx={{ mt: 3, mb: 2 }}
                   disableElevation
                   disabled={submit ? true : disableLogin}
                   endIcon={submit ? null : <Login />}
                 >
                   {submit ? (
-                    <CircularProgress size={25} color="inherit" />
+                    <CircularProgress size={25} color='inherit' />
                   ) : (
                     "Sign In"
                   )}
@@ -155,14 +189,14 @@ const SignIn = () => {
                         }}
                       />
                     }
-                    label="Show Password"
+                    label='Show Password'
                   />
                 </FormGroup>
                 <Grid container>
                   <Grid item xs></Grid>
                   <Grid item>
-                    <RLink to="/auth/signup">
-                      <Link href="#" variant="body2">
+                    <RLink to='/auth/signup'>
+                      <Link href='#' variant='body2'>
                         {"Don't have an account? Sign Up"}
                       </Link>
                     </RLink>
