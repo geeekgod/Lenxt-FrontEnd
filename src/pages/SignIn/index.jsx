@@ -14,6 +14,7 @@ import {
   Checkbox,
   CircularProgress,
   useTheme,
+  Alert,
 } from "@mui/material";
 import { Link as RLink, useNavigate } from "react-router-dom";
 import { lenxtApi } from "../../api/lenxtApi";
@@ -27,6 +28,8 @@ const SignIn = () => {
   const [disableLogin, setDisableLogin] = useState(false);
   const [submit, setSubmit] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [errPswd, setErrPswd] = useState(false);
+  const [errMail, setErrMail] = useState(false);
 
   useEffect(() => {
     if (
@@ -47,6 +50,9 @@ const SignIn = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmit(true);
+    setErrMail(false);
+    setErrPswd(false);
+    setErrorMsg(null);
     // setTimeout(() => {
     //   console.log({
     //     email: email,
@@ -65,12 +71,10 @@ const SignIn = () => {
       .then((res) => {
         if (res.data.err && res.data.err === "Incorrect Password") {
           setErrorMsg("Incorrect Password");
+          setErrPswd(true);
           console.log(errorMsg);
         }
-        if (
-          res.data.message &&
-          res.data.message?.message === "Logged in!!"
-        ) {
+        if (res.data.message && res.data.message?.message === "Logged in!!") {
           setErrorMsg(null);
           console.log(res.data);
         }
@@ -80,11 +84,12 @@ const SignIn = () => {
         console.log(err);
         if (errorMsg === null) {
           if (
-            err.response.data &&
-            err.response.data === "User not found please register"
+            err.response &&
+            err.response.data.err === "User not found please register"
           ) {
             setErrorMsg("User doesn't exists please register");
-            console.log("err: ",errorMsg);
+            console.log("err: ", errorMsg);
+            setErrMail(true);
           }
         }
         setSubmit(false);
@@ -148,7 +153,12 @@ const SignIn = () => {
                   value={email}
                   onChange={(e) => {
                     setEmail(e.target.value);
+                    if (errPswd === true) {
+                      setErrMail(false);
+                    }
+                    setErrorMsg(null);
                   }}
+                  error={errMail}
                 />
                 <TextField
                   margin='normal'
@@ -162,8 +172,19 @@ const SignIn = () => {
                   value={password}
                   onChange={(e) => {
                     setPassword(e.target.value);
+                    if (errPswd === true) {
+                      setErrPswd(false);
+                    }
+                    setErrorMsg(null);
                   }}
+                  error={errPswd}
                 />
+                {errorMsg && errPswd ? (
+                  <Alert severity='error'>{errorMsg}</Alert>
+                ) : null}
+                {errorMsg && errMail ? (
+                  <Alert severity='error'>{errorMsg}</Alert>
+                ) : null}
                 <Button
                   type='submit'
                   fullWidth
