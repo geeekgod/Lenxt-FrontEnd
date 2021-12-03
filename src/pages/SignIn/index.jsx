@@ -30,6 +30,7 @@ const SignIn = () => {
   const [errorMsg, setErrorMsg] = useState(null);
   const [errPswd, setErrPswd] = useState(false);
   const [errMail, setErrMail] = useState(false);
+  const [loginSuccess, setLoginSuccess] = useState(false);
 
   useEffect(() => {
     if (
@@ -53,6 +54,7 @@ const SignIn = () => {
     setErrMail(false);
     setErrPswd(false);
     setErrorMsg(null);
+    setLoginSuccess(false);
     // setTimeout(() => {
     //   console.log({
     //     email: email,
@@ -73,10 +75,13 @@ const SignIn = () => {
           setErrorMsg("Incorrect Password");
           setErrPswd(true);
           console.log(errorMsg);
+          setLoginSuccess(false);
         }
         if (res.data.message && res.data.message?.message === "Logged in!!") {
           setErrorMsg(null);
           console.log(res.data);
+          setLoginSuccess(true);
+          setDisableLogin(true);
         }
         setSubmit(false);
       })
@@ -90,6 +95,7 @@ const SignIn = () => {
             setErrorMsg("User doesn't exists please register");
             console.log("err: ", errorMsg);
             setErrMail(true);
+            setLoginSuccess(false);
           }
         }
         setSubmit(false);
@@ -153,7 +159,7 @@ const SignIn = () => {
                   value={email}
                   onChange={(e) => {
                     setEmail(e.target.value);
-                    if (errPswd === true) {
+                    if (errMail === true) {
                       setErrMail(false);
                     }
                     setErrorMsg(null);
@@ -184,6 +190,9 @@ const SignIn = () => {
                 ) : null}
                 {errorMsg && errMail ? (
                   <Alert severity='error'>{errorMsg}</Alert>
+                ) : null}
+                {!errorMsg && !errMail && !errPswd && loginSuccess ? (
+                  <Alert severity='success'>Signin successful!</Alert>
                 ) : null}
                 <Button
                   type='submit'
