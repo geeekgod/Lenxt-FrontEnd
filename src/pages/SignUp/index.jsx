@@ -18,6 +18,7 @@ import {
 } from "@mui/material";
 import { Link as RLink, useNavigate } from "react-router-dom";
 import { getWindowDimensions } from "../../utils/getWidth";
+import { lenxtApi } from "../../api/lenxtApi";
 
 const SignUp = () => {
   const theme = useTheme();
@@ -27,10 +28,13 @@ const SignUp = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [cnfPassword, setCnfPassword] = useState("");
-  const [disableLogin, setDisableLogin] = useState(false);
+  const [disableSignUp, setDisableSignUp] = useState(false);
   const [errPswd, setErrPswd] = useState(false);
   const [submit, setSubmit] = useState(false);
   const [flexDir, setFlexDir] = useState("row");
+  const [errMail, setErrMail] = useState(false);
+  const [signupSuccess, setsignupSuccess] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
     const cnfPssLen = cnfPassword.length;
@@ -53,29 +57,50 @@ const SignUp = () => {
         email.indexOf("@") !== -1 &&
         email.indexOf(".") !== -1
       ) {
-        setDisableLogin(false);
+        setDisableSignUp(false);
       } else {
-        setDisableLogin(true);
+        setDisableSignUp(true);
       }
     } else {
-      setDisableLogin(true);
+      setDisableSignUp(true);
     }
   }, [email, password, cnfPassword, name]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (cnfPassword === password) {
+      setErrorMsg(null);
+      setErrMail(false);
       setSubmit(true);
-      setTimeout(() => {
-        console.log({
+      lenxtApi
+        .post("/auth/signup", {
+          name: name,
           email: email,
           password: password,
+        })
+        .then((res) => {
+          if (res.data.message && res.data.message === "User Created") {
+            setErrorMsg(null);
+            console.log(res.data);
+            setsignupSuccess(true);
+            setDisableSignUp(true);
+          }
+          console.log(res.data);
+          setSubmit(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          if (
+            err.response &&
+            err.response.data.errMsg === "User already exists"
+          ) {
+            setErrorMsg("User already exists please sign in");
+            console.log(err.response);
+            console.log("err: ", errorMsg);
+            setErrMail(true);
+          }
+          setSubmit(false);
         });
-        setSubmit(false);
-      }, 5000);
-      setTimeout(() => {
-        navigate("/");
-      }, 6000);
     } else {
       setErrPswd(true);
     }
@@ -123,7 +148,7 @@ const SignUp = () => {
             alignItems: "center",
           }}
         >
-          <Container component="main" maxWidth="xs">
+          <Container component='main' maxWidth='xs'>
             <Box
               sx={{
                 display: "flex",
@@ -133,7 +158,7 @@ const SignUp = () => {
                 marginBottom: flexDir === "row" ? 10 : 2,
               }}
             >
-              <Typography component="h1" variant="h5">
+              <Typography component='h1' variant='h5'>
                 Welcome to{" "}
                 <b
                   style={{ fontWeight: 600, color: theme.palette.primary.main }}
@@ -141,23 +166,23 @@ const SignUp = () => {
                   LENXT
                 </b>
               </Typography>
-              <Typography component="h2" variant="h5">
+              <Typography component='h2' variant='h5'>
                 Create an Account
               </Typography>
               <Box
-                component="form"
+                component='form'
                 onSubmit={handleSubmit}
                 noValidate
                 sx={{ mt: 1, padding: 1 }}
               >
                 <TextField
-                  margin="normal"
+                  margin='normal'
                   required
                   fullWidth
-                  id="name"
-                  label="Full Name"
-                  name="name"
-                  autoComplete="name"
+                  id='name'
+                  label='Full Name'
+                  name='name'
+                  autoComplete='name'
                   autoFocus
                   value={name}
                   onChange={(e) => {
@@ -165,27 +190,31 @@ const SignUp = () => {
                   }}
                 />
                 <TextField
-                  margin="normal"
+                  margin='normal'
                   required
                   fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
+                  id='email'
+                  label='Email Address'
+                  name='email'
+                  autoComplete='email'
                   value={email}
                   onChange={(e) => {
                     setEmail(e.target.value);
+                    if (errMail === true) {
+                      setErrMail(false);
+                    }
                   }}
+                  error={errMail}
                 />
                 <TextField
-                  margin="normal"
+                  margin='normal'
                   required
                   fullWidth
-                  name="password"
-                  label="Password"
+                  name='password'
+                  label='Password'
                   type={showPassword ? "text" : "password"}
-                  id="password"
-                  autoComplete="current-password"
+                  id='password'
+                  autoComplete='current-password'
                   value={password}
                   onChange={(e) => {
                     setPassword(e.target.value);
@@ -196,13 +225,13 @@ const SignUp = () => {
                   error={errPswd}
                 />
                 <TextField
-                  margin="normal"
+                  margin='normal'
                   required
                   fullWidth
-                  name="cnfPassword"
-                  label="Confirm Password"
+                  name='cnfPassword'
+                  label='Confirm Password'
                   type={showPassword ? "text" : "password"}
-                  id="cnfPassword"
+                  id='cnfPassword'
                   value={cnfPassword}
                   onChange={(e) => {
                     setCnfPassword(e.target.value);
@@ -213,19 +242,25 @@ const SignUp = () => {
                   error={errPswd}
                 />
                 {errPswd ? (
-                  <Alert severity="error">Both password should be same</Alert>
+                  <Alert severity='error'>Both password should be same</Alert>
+                ) : null}
+                {errorMsg && errMail ? (
+                  <Alert severity='error'>{errorMsg}</Alert>
+                ) : null}
+                {!errorMsg && !errMail && !errPswd && signupSuccess ? (
+                  <Alert severity='success'>Registered Successfully!</Alert>
                 ) : null}
                 <Button
-                  type="submit"
+                  type='submit'
                   fullWidth
-                  variant="contained"
+                  variant='contained'
                   sx={{ mt: 3, mb: 2 }}
                   disableElevation
-                  disabled={submit ? true : disableLogin}
+                  disabled={submit ? true : disableSignUp}
                   endIcon={submit ? null : <LockOpen />}
                 >
                   {submit ? (
-                    <CircularProgress size={25} color="inherit" />
+                    <CircularProgress size={25} color='inherit' />
                   ) : (
                     "Register"
                   )}
@@ -240,14 +275,14 @@ const SignUp = () => {
                         }}
                       />
                     }
-                    label="Show Password"
+                    label='Show Password'
                   />
                 </FormGroup>
                 <Grid container>
                   <Grid item xs></Grid>
                   <Grid item>
-                    <RLink to="/auth/signin">
-                      <Link variant="body2">
+                    <RLink to='/auth/signin'>
+                      <Link variant='body2'>
                         {"Already have an account? Sign in"}
                       </Link>
                     </RLink>

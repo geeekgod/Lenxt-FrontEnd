@@ -87,16 +87,14 @@ const SignIn = () => {
       })
       .catch((err) => {
         console.log(err);
-        if (errorMsg === null) {
-          if (
-            err.response &&
-            err.response.data.err === "User not found please register"
-          ) {
-            setErrorMsg("User doesn't exists please register");
-            console.log("err: ", errorMsg);
-            setErrMail(true);
-            setLoginSuccess(false);
-          }
+        if (
+          err.response &&
+          err.response.data.err === "User not found please register"
+        ) {
+          setErrorMsg("User doesn't exists please register");
+          console.log("err: ", errorMsg);
+          setErrMail(true);
+          setLoginSuccess(false);
         }
         setSubmit(false);
       });
