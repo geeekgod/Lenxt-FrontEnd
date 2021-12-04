@@ -37,6 +37,7 @@ const SignUp = () => {
   const [signupSuccess, setsignupSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
   const [passIsWeak, setPassIsWeak] = useState(false);
+  const [stopSignUp, setStopSignUp] = useState(false);
 
   useEffect(() => {
     const cnfPssLen = cnfPassword.length;
@@ -59,6 +60,7 @@ const SignUp = () => {
         email.indexOf("@") !== -1 &&
         email.indexOf(".") !== -1
       ) {
+        passCheck();
         setDisableSignUp(false);
       } else {
         setDisableSignUp(true);
@@ -68,14 +70,11 @@ const SignUp = () => {
     }
   }, [email, password, cnfPassword, name]);
 
-  const passCheck = () => {
-    const strength = passStrengthChecker(password);
-    console.log(passStrengthChecker(password));
-    if (strength == "weak") {
-      console.log(1);
+  const passCheck = async () => {
+    const strength = await passStrengthChecker(password);
+    if (strength === "weak") {
       setPassIsWeak(true);
     } else {
-      console.log(2);
       setPassIsWeak(false);
     }
   };
@@ -118,20 +117,26 @@ const SignUp = () => {
       setErrorMsg(null);
       setErrMail(false);
       setSubmit(true);
-      passCheck();
-      setTimeout(() => {
-        console.log(passIsWeak);
-      }, 3000);
-      setTimeout(() => {
-        if (passIsWeak === false) {
-          // signUpMeth();
-          setSubmit(false);
-          console.log(passIsWeak);
+      passCheck().then(() => {
+        if (passIsWeak) {
+          setStopSignUp(true);
+          setDisableSignUp(true);
         } else {
-          setSubmit(false);
-          console.log(passIsWeak);
+          setStopSignUp(false);
+          setDisableSignUp(false);
         }
-      }, 4000);
+        switch (passIsWeak) {
+          case true:
+            setSubmit(false);
+            break;
+          case false:
+            signUpMeth();
+            break;
+          default:
+            setSubmit(false);
+            break;
+        }
+      });
     } else {
       setErrPswd(true);
     }
@@ -255,6 +260,9 @@ const SignUp = () => {
                     if (passIsWeak === true) {
                       setPassIsWeak(false);
                     }
+                    if (stopSignUp === true) {
+                      setStopSignUp(false);
+                    }
                   }}
                   error={errPswd}
                 />
@@ -275,6 +283,9 @@ const SignUp = () => {
                     if (passIsWeak === true) {
                       setPassIsWeak(false);
                     }
+                    if (stopSignUp === true) {
+                      setStopSignUp(false);
+                    }
                   }}
                   error={errPswd}
                 />
@@ -287,7 +298,7 @@ const SignUp = () => {
                 {!errorMsg && !errMail && !errPswd && signupSuccess ? (
                   <Alert severity="success">Registered Successfully!</Alert>
                 ) : null}
-                {passIsWeak !== false ? (
+                {passIsWeak !== false && stopSignUp ? (
                   <Alert severity="error">
                     The password you have entered is weak please enter a strong
                     Password
