@@ -19,6 +19,7 @@ import {
 import { Link as RLink, useNavigate } from "react-router-dom";
 import { getWindowDimensions } from "../../utils/getWidth";
 import { lenxtApi } from "../../api/lenxtApi";
+import { passStrengthChecker } from "../../utils/passStrengthChecker";
 
 const SignUp = () => {
   const theme = useTheme();
@@ -35,6 +36,7 @@ const SignUp = () => {
   const [errMail, setErrMail] = useState(false);
   const [signupSuccess, setsignupSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [passIsWeak, setPassIsWeak] = useState(false);
 
   useEffect(() => {
     const cnfPssLen = cnfPassword.length;
@@ -66,41 +68,70 @@ const SignUp = () => {
     }
   }, [email, password, cnfPassword, name]);
 
+  const passCheck = () => {
+    const strength = passStrengthChecker(password);
+    console.log(passStrengthChecker(password));
+    if (strength == "weak") {
+      console.log(1);
+      setPassIsWeak(true);
+    } else {
+      console.log(2);
+      setPassIsWeak(false);
+    }
+  };
+
+  const signUpMeth = () => {
+    lenxtApi
+      .post("/auth/signup", {
+        name: name,
+        email: email,
+        password: password,
+      })
+      .then((res) => {
+        if (res.data.message && res.data.message === "User Created") {
+          setErrorMsg(null);
+          console.log(res.data);
+          setsignupSuccess(true);
+          setDisableSignUp(true);
+        }
+        console.log(res.data);
+        setSubmit(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        if (
+          err.response &&
+          err.response.data.errMsg === "User already exists"
+        ) {
+          setErrorMsg("User already exists please sign in");
+          console.log(err.response);
+          console.log("err: ", errorMsg);
+          setErrMail(true);
+        }
+        setSubmit(false);
+      });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (cnfPassword === password) {
       setErrorMsg(null);
       setErrMail(false);
       setSubmit(true);
-      lenxtApi
-        .post("/auth/signup", {
-          name: name,
-          email: email,
-          password: password,
-        })
-        .then((res) => {
-          if (res.data.message && res.data.message === "User Created") {
-            setErrorMsg(null);
-            console.log(res.data);
-            setsignupSuccess(true);
-            setDisableSignUp(true);
-          }
-          console.log(res.data);
+      passCheck();
+      setTimeout(() => {
+        console.log(passIsWeak);
+      }, 3000);
+      setTimeout(() => {
+        if (passIsWeak === false) {
+          // signUpMeth();
           setSubmit(false);
-        })
-        .catch((err) => {
-          console.log(err);
-          if (
-            err.response &&
-            err.response.data.errMsg === "User already exists"
-          ) {
-            setErrorMsg("User already exists please sign in");
-            console.log(err.response);
-            console.log("err: ", errorMsg);
-            setErrMail(true);
-          }
+          console.log(passIsWeak);
+        } else {
           setSubmit(false);
-        });
+          console.log(passIsWeak);
+        }
+      }, 4000);
     } else {
       setErrPswd(true);
     }
@@ -148,7 +179,7 @@ const SignUp = () => {
             alignItems: "center",
           }}
         >
-          <Container component='main' maxWidth='xs'>
+          <Container component="main" maxWidth="xs">
             <Box
               sx={{
                 display: "flex",
@@ -158,7 +189,7 @@ const SignUp = () => {
                 marginBottom: flexDir === "row" ? 10 : 2,
               }}
             >
-              <Typography component='h1' variant='h5'>
+              <Typography component="h1" variant="h5">
                 Welcome to{" "}
                 <b
                   style={{ fontWeight: 600, color: theme.palette.primary.main }}
@@ -166,23 +197,23 @@ const SignUp = () => {
                   LENXT
                 </b>
               </Typography>
-              <Typography component='h2' variant='h5'>
+              <Typography component="h2" variant="h5">
                 Create an Account
               </Typography>
               <Box
-                component='form'
+                component="form"
                 onSubmit={handleSubmit}
                 noValidate
                 sx={{ mt: 1, padding: 1 }}
               >
                 <TextField
-                  margin='normal'
+                  margin="normal"
                   required
                   fullWidth
-                  id='name'
-                  label='Full Name'
-                  name='name'
-                  autoComplete='name'
+                  id="name"
+                  label="Full Name"
+                  name="name"
+                  autoComplete="name"
                   autoFocus
                   value={name}
                   onChange={(e) => {
@@ -190,13 +221,13 @@ const SignUp = () => {
                   }}
                 />
                 <TextField
-                  margin='normal'
+                  margin="normal"
                   required
                   fullWidth
-                  id='email'
-                  label='Email Address'
-                  name='email'
-                  autoComplete='email'
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
                   value={email}
                   onChange={(e) => {
                     setEmail(e.target.value);
@@ -207,60 +238,72 @@ const SignUp = () => {
                   error={errMail}
                 />
                 <TextField
-                  margin='normal'
+                  margin="normal"
                   required
                   fullWidth
-                  name='password'
-                  label='Password'
+                  name="password"
+                  label="Password"
                   type={showPassword ? "text" : "password"}
-                  id='password'
-                  autoComplete='current-password'
+                  id="password"
+                  autoComplete="current-password"
                   value={password}
                   onChange={(e) => {
                     setPassword(e.target.value);
                     if (errPswd === true) {
                       setErrPswd(false);
                     }
+                    if (passIsWeak === true) {
+                      setPassIsWeak(false);
+                    }
                   }}
                   error={errPswd}
                 />
                 <TextField
-                  margin='normal'
+                  margin="normal"
                   required
                   fullWidth
-                  name='cnfPassword'
-                  label='Confirm Password'
+                  name="cnfPassword"
+                  label="Confirm Password"
                   type={showPassword ? "text" : "password"}
-                  id='cnfPassword'
+                  id="cnfPassword"
                   value={cnfPassword}
                   onChange={(e) => {
                     setCnfPassword(e.target.value);
                     if (errPswd === true) {
                       setErrPswd(false);
                     }
+                    if (passIsWeak === true) {
+                      setPassIsWeak(false);
+                    }
                   }}
                   error={errPswd}
                 />
                 {errPswd ? (
-                  <Alert severity='error'>Both password should be same</Alert>
+                  <Alert severity="error">Both password should be same</Alert>
                 ) : null}
                 {errorMsg && errMail ? (
-                  <Alert severity='error'>{errorMsg}</Alert>
+                  <Alert severity="error">{errorMsg}</Alert>
                 ) : null}
                 {!errorMsg && !errMail && !errPswd && signupSuccess ? (
-                  <Alert severity='success'>Registered Successfully!</Alert>
+                  <Alert severity="success">Registered Successfully!</Alert>
+                ) : null}
+                {passIsWeak !== false ? (
+                  <Alert severity="error">
+                    The password you have entered is weak please enter a strong
+                    Password
+                  </Alert>
                 ) : null}
                 <Button
-                  type='submit'
+                  type="submit"
                   fullWidth
-                  variant='contained'
+                  variant="contained"
                   sx={{ mt: 3, mb: 2 }}
                   disableElevation
                   disabled={submit ? true : disableSignUp}
                   endIcon={submit ? null : <LockOpen />}
                 >
                   {submit ? (
-                    <CircularProgress size={25} color='inherit' />
+                    <CircularProgress size={25} color="inherit" />
                   ) : (
                     "Register"
                   )}
@@ -275,14 +318,14 @@ const SignUp = () => {
                         }}
                       />
                     }
-                    label='Show Password'
+                    label="Show Password"
                   />
                 </FormGroup>
                 <Grid container>
                   <Grid item xs></Grid>
                   <Grid item>
-                    <RLink to='/auth/signin'>
-                      <Link variant='body2'>
+                    <RLink to="/auth/signin">
+                      <Link variant="body2">
                         {"Already have an account? Sign in"}
                       </Link>
                     </RLink>
