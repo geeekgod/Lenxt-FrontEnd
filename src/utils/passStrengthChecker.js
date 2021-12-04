@@ -1,24 +1,17 @@
-// let strongPassword = new RegExp(
-//   "(?=.[a-z])(?=.[A-Z])(?=.[0-9])(?=.[^A-Za-z0-9])(?=.{8,})"
-// );
-let strongPassword = /(?=.[a-z])(?=.[A-Z])(?=.[0-9])(?=.[^A-Za-z0-9])(?=.{8,})/;
-// let mediumPassword = new RegExp(
-// "((?=.[a-z])(?=.[A-Z])(?=.[0-9])(?=.[^A-Za-z0-9])(?=.{6,}))|((?=.[a-z])(?=.[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))"
-// );
+import validator from "validator";
 
-let mediumPassword =
-  /((?=.[a-z])(?=.[A-Z])(?=.[0-9])(?=.[^A-Za-z0-9])(?=.{6,}))|((?=.[a-z])(?=.[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))/;
-
-export const passStrengthChecker = (e) => {
-  console.log("Strong", strongPassword.test(e));
-  if (strongPassword.test(e)) {
-    console.log("strong1");
+export const passStrengthChecker = async (e) => {
+  if (
+    validator.isStrongPassword(e, {
+      minLength: 8,
+      minLowercase: 1,
+      minUppercase: 1,
+      minNumbers: 1,
+      minSymbols: 1,
+    })
+  ) {
     return "strong";
-  } else if (mediumPassword.test(e)) {
-    console.log("medium1");
-    return "medium";
   } else {
-    console.log("weak1");
     return "weak";
   }
 };
