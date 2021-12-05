@@ -30,11 +30,12 @@ const ForgotPassword = () => {
   const [otp, setOtp] = useState(0);
   const [disableReset, setDisableReset] = useState(false);
   const [errPswd, setErrPswd] = useState(false);
+  const [errOTP, setErrOTP] = useState(false);
   const [submit, setSubmit] = useState(false);
   const [errMail, setErrMail] = useState(false);
   const [passIsWeak, setPassIsWeak] = useState(false);
   const [stopSignUp, setStopSignUp] = useState(false);
-  const [serverMsg, serServerMsg] = useState("");
+  const [serverMsg, setServerMsg] = useState("");
 
   useEffect(() => {
     const cnfPssLen = cnfPassword.length;
@@ -117,6 +118,25 @@ const ForgotPassword = () => {
     }
   }, [email, password, cnfPassword, otp]);
 
+  const alertMeth = () => {
+    switch (serverMsg) {
+      case "user not present":
+      case "user not found":
+        setErrMail(true);
+        break;
+      case "otp not present":
+        setErrOTP(true);
+        setErrMail(true);
+        break;
+      case "otp not valid":
+        setErrOTP(true);
+        break;
+      default:
+        setErrMail(false);
+        setErrOTP(false);
+    }
+  };
+
   const passCheck = async () => {
     const strength = await passStrengthChecker(password);
     if (strength === "weak") {
@@ -133,8 +153,7 @@ const ForgotPassword = () => {
       })
       .then((res) => {
         if (res.data.msg) {
-          serServerMsg(res.data.msg);
-          setDisableReset(true);
+          setServerMsg(res.data.msg);
         }
         setSubmit(false);
       })
@@ -153,7 +172,7 @@ const ForgotPassword = () => {
       })
       .then((res) => {
         if (res.data.msg) {
-          serServerMsg(res.data.msg);
+          setServerMsg(res.data.msg);
           setDisableReset(true);
         }
         setSubmit(false);
@@ -201,7 +220,7 @@ const ForgotPassword = () => {
       .then((res) => {
         if (res.data.msg) {
           console.log(res.data.msg);
-          serServerMsg(res.data.msg);
+          setServerMsg(res.data.msg);
           setDisableReset(true);
         }
         setSubmit(false);
@@ -220,7 +239,7 @@ const ForgotPassword = () => {
       })
       .then((res) => {
         if (res.data.msg) {
-          serServerMsg(res.data.msg);
+          setServerMsg(res.data.msg);
           setDisableReset(true);
         }
         setSubmit(false);
@@ -232,6 +251,8 @@ const ForgotPassword = () => {
   };
 
   const handleSubmit = (e) => {
+    setErrMail(false);
+    setErrOTP(false);
     e.preventDefault();
     switch (serverMsg) {
       case "":
@@ -259,6 +280,51 @@ const ForgotPassword = () => {
         break;
     }
     console.log(serverMsg);
+    alertMeth();
+  };
+
+  const alertRenderer = () => {
+    switch (serverMsg) {
+      case "user not present":
+      case "user not found":
+        return (
+          <>
+            {errMail ? (
+              <Alert severity="error">
+                The email doesn't belong to any user. Please check your email
+                carefully or Register your self!
+              </Alert>
+            ) : null}
+          </>
+        );
+        break;
+      case "otp not present":
+        return (
+          <>
+            {errMail !== false || errOTP !== false ? (
+              <Alert severity="error">
+                Please check your entered email or otp carefully!
+              </Alert>
+            ) : null}
+          </>
+        );
+        break;
+      case "otp not valid":
+        return (
+          <>
+            {errOTP !== false ? (
+              <Alert severity="error">
+                The OTP you've enterd is not valid please enter a valid otp sent
+                to your mail.
+              </Alert>
+            ) : null}
+          </>
+        );
+        break;
+      default:
+        return null;
+        break;
+    }
   };
 
   useEffect(() => {
@@ -327,11 +393,11 @@ const ForgotPassword = () => {
               value={otp}
               onChange={(e) => {
                 setOtp(e.target.value);
-                if (errMail === true) {
-                  setErrMail(false);
+                if (errOTP === true) {
+                  setErrOTP(false);
                 }
               }}
-              error={errMail}
+              error={errOTP}
             />
           </>
         );
@@ -369,11 +435,11 @@ const ForgotPassword = () => {
               value={otp}
               onChange={(e) => {
                 setOtp(e.target.value);
-                if (errMail === true) {
-                  setErrMail(false);
+                if (errOTP === true) {
+                  setErrOTP(false);
                 }
               }}
-              error={errMail}
+              error={errOTP}
             />
             <TextField
               margin="normal"
@@ -427,6 +493,122 @@ const ForgotPassword = () => {
     }
   };
 
+  const buttonRenderer = () => {
+    switch (serverMsg) {
+      case "":
+      case "user not present":
+      case "user not found":
+        return (
+          <>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              disableElevation
+              disabled={submit ? true : disableReset}
+            >
+              {submit ? (
+                <CircularProgress size={25} color="inherit" />
+              ) : (
+                "Find User"
+              )}
+            </Button>
+          </>
+        );
+        break;
+      case "user present":
+        return (
+          <>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              disableElevation
+              disabled={submit ? true : disableReset}
+            >
+              {submit ? (
+                <CircularProgress size={25} color="inherit" />
+              ) : (
+                "Send OTP"
+              )}
+            </Button>
+          </>
+        );
+        break;
+      case "otp not present":
+        return (
+          <>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              disableElevation
+              disabled={submit ? true : disableReset}
+            >
+              {submit ? (
+                <CircularProgress size={25} color="inherit" />
+              ) : (
+                "Resend OTP"
+              )}
+            </Button>
+          </>
+        );
+        break;
+      case "otp sent":
+      case "otp not valid":
+        return (
+          <>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              disableElevation
+              disabled={submit ? true : disableReset}
+            >
+              {submit ? (
+                <CircularProgress size={25} color="inherit" />
+              ) : (
+                "Validate OTP"
+              )}
+            </Button>
+          </>
+        );
+        break;
+      case "otp validated success":
+        return (
+          <>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              disableElevation
+              disabled={submit ? true : disableReset}
+            >
+              {submit ? (
+                <CircularProgress size={25} color="inherit" />
+              ) : (
+                "Reset Password"
+              )}
+            </Button>
+          </>
+        );
+        break;
+    }
+  };
+
+  useEffect(() => {
+    if (serverMsg === "password reset successfull") {
+      setTimeout(() => {
+        navigate("/auth/signin");
+      }, 1500);
+    }
+  }, [serverMsg]);
+
   return (
     <Box sx={{ width: "100%" }}>
       <Grid
@@ -450,68 +632,104 @@ const ForgotPassword = () => {
               marginBottom: 10,
             }}
           >
-            <Typography component="h1" variant="h5">
-              Reset Password
-            </Typography>
-            <Typography component="h4" variant="body1">
-              Check your mail reset your password
-            </Typography>
-            <Box
-              component="form"
-              onSubmit={handleSubmit}
-              noValidate
-              sx={{ mt: 1, padding: 1 }}
-            >
-              {renderFields()}
-              {errPswd ? (
-                <Alert severity="error">Both password should be same</Alert>
-              ) : null}
-              {passIsWeak !== false && stopSignUp ? (
-                <Alert severity="error">
-                  The password you have entered is weak please enter a strong
-                  Password
-                </Alert>
-              ) : null}
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                disableElevation
-                disabled={submit ? true : disableReset}
-                // endIcon={submit ? null : <LockOpen />}
+            {serverMsg === "password reset successfull" ? (
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginTop: "auto",
+                  marginBottom: "auto",
+                }}
               >
-                {submit ? (
-                  <CircularProgress size={25} color="inherit" />
-                ) : (
-                  "Find User"
-                )}
-              </Button>
-              {serverMsg === "otp validated success" ? (
-                <FormGroup>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={showPassword}
-                        onChange={() => {
-                          setShowPassword(!showPassword);
-                        }}
+                <Box sx={{ height: "70vh" }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginTop: "60%",
+                      marginBottom: "auto",
+                    }}
+                  >
+                    <CircularProgress
+                      sx={{ marginTop: "auto", marginBottom: 5 }}
+                    />
+                    <Typography
+                      component="h3"
+                      variant="body1"
+                      sx={{ marginTop: "auto", marginBottom: "auto" }}
+                    >
+                      Redirecting to Sign in
+                    </Typography>
+                  </Box>
+                </Box>
+              </Box>
+            ) : (
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <Typography component="h1" variant="h5">
+                  Reset Password
+                </Typography>
+                <Typography component="h4" variant="body1">
+                  Check your mail reset your password
+                </Typography>
+                <Box
+                  component="form"
+                  onSubmit={handleSubmit}
+                  noValidate
+                  sx={{ mt: 1, padding: 1 }}
+                >
+                  {/* Rendering input fields dynamically based on server response */}
+                  {renderFields()}
+                  {errPswd ? (
+                    <Alert severity="error">Both password should be same</Alert>
+                  ) : null}
+                  {passIsWeak !== false && stopSignUp ? (
+                    <Alert severity="error">
+                      The password you have entered is weak please enter a
+                      strong Password
+                    </Alert>
+                  ) : null}
+                  {/* Rendering alerts dynamically based on server response */}
+                  {alertRenderer()}
+                  {/* Rendering buttons dynamically based on server response */}
+                  {buttonRenderer()}
+                  {/* Rendering show password only if reset password is allowed by server */}
+                  {serverMsg === "otp validated success" ? (
+                    <FormGroup>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={showPassword}
+                            onChange={() => {
+                              setShowPassword(!showPassword);
+                            }}
+                          />
+                        }
+                        label="Show Password"
                       />
-                    }
-                    label="Show Password"
-                  />
-                </FormGroup>
-              ) : null}
-              <Grid container sx={{ paddingTop: 2 }}>
-                <Grid item>
-                  <RLink to="/auth/signup">
-                    <Link href="#" variant="body2">
-                      {"Don't have an account? Sign Up"}
-                    </Link>
-                  </RLink>
-                </Grid>
-              </Grid>
-            </Box>
+                    </FormGroup>
+                  ) : null}
+                  <Grid container sx={{ paddingTop: 2 }}>
+                    <Grid item>
+                      <RLink to="/auth/signup">
+                        <Link href="#" variant="body2">
+                          {"Don't have an account? Sign Up"}
+                        </Link>
+                      </RLink>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Box>
+            )}
           </Box>
         </Container>
       </Grid>
