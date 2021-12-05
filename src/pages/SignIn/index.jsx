@@ -55,16 +55,6 @@ const SignIn = () => {
     setErrPswd(false);
     setErrorMsg(null);
     setLoginSuccess(false);
-    // setTimeout(() => {
-    //   console.log({
-    //     email: email,
-    //     password: password,
-    //   });
-    //   setSubmit(false);
-    // }, 5000);
-    // setTimeout(() => {
-    //   navigate("/");
-    // }, 6000);
     lenxtApi
       .post("/auth/signin", {
         email: email,
@@ -119,7 +109,7 @@ const SignIn = () => {
           <img src={signInImg} style={{ width: "90%" }} alt={"Sign In Image"} />
         </Grid>
         <Grid item md={6} sx={{ justifyContent: "center", margin: "auto" }}>
-          <Container component='main' maxWidth='xs'>
+          <Container component="main" maxWidth="xs">
             <Box
               sx={{
                 display: "flex",
@@ -128,7 +118,7 @@ const SignIn = () => {
                 marginBottom: 2,
               }}
             >
-              <Typography component='h1' variant='h5'>
+              <Typography component="h1" variant="h5">
                 Welcome Back to{" "}
                 <b
                   style={{ fontWeight: 600, color: theme.palette.primary.main }}
@@ -136,23 +126,23 @@ const SignIn = () => {
                   LENXT
                 </b>
               </Typography>
-              <Typography component='h2' variant='h5'>
+              <Typography component="h2" variant="h5">
                 Sign to your account
               </Typography>
               <Box
-                component='form'
+                component="form"
                 onSubmit={handleSubmit}
                 noValidate
                 sx={{ mt: 1, padding: 1 }}
               >
                 <TextField
-                  margin='normal'
+                  margin="normal"
                   required
                   fullWidth
-                  id='email'
-                  label='Email Address'
-                  name='email'
-                  autoComplete='email'
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
                   autoFocus
                   value={email}
                   onChange={(e) => {
@@ -165,14 +155,14 @@ const SignIn = () => {
                   error={errMail}
                 />
                 <TextField
-                  margin='normal'
+                  margin="normal"
                   required
                   fullWidth
-                  name='password'
-                  label='Password'
+                  name="password"
+                  label="Password"
                   type={showPassword ? "text" : "password"}
-                  id='password'
-                  autoComplete='current-password'
+                  id="password"
+                  autoComplete="current-password"
                   value={password}
                   onChange={(e) => {
                     setPassword(e.target.value);
@@ -184,25 +174,25 @@ const SignIn = () => {
                   error={errPswd}
                 />
                 {errorMsg && errPswd ? (
-                  <Alert severity='error'>{errorMsg}</Alert>
+                  <Alert severity="error">{errorMsg}</Alert>
                 ) : null}
                 {errorMsg && errMail ? (
-                  <Alert severity='error'>{errorMsg}</Alert>
+                  <Alert severity="error">{errorMsg}</Alert>
                 ) : null}
                 {!errorMsg && !errMail && !errPswd && loginSuccess ? (
-                  <Alert severity='success'>Signin successful!</Alert>
+                  <Alert severity="success">Signin successful!</Alert>
                 ) : null}
                 <Button
-                  type='submit'
+                  type="submit"
                   fullWidth
-                  variant='contained'
+                  variant="contained"
                   sx={{ mt: 3, mb: 2 }}
                   disableElevation
                   disabled={submit ? true : disableLogin}
                   endIcon={submit ? null : <Login />}
                 >
                   {submit ? (
-                    <CircularProgress size={25} color='inherit' />
+                    <CircularProgress size={25} color="inherit" />
                   ) : (
                     "Sign In"
                   )}
@@ -217,14 +207,20 @@ const SignIn = () => {
                         }}
                       />
                     }
-                    label='Show Password'
+                    label="Show Password"
                   />
                 </FormGroup>
-                <Grid container>
-                  <Grid item xs></Grid>
+                <Grid container sx={{ paddingTop: 2 }}>
+                  <Grid item xs>
+                    <RLink to="/auth/forgot-password">
+                      <Link href="#" variant="body2">
+                        {"Forgot Password"}
+                      </Link>
+                    </RLink>
+                  </Grid>
                   <Grid item>
-                    <RLink to='/auth/signup'>
-                      <Link href='#' variant='body2'>
+                    <RLink to="/auth/signup">
+                      <Link href="#" variant="body2">
                         {"Don't have an account? Sign Up"}
                       </Link>
                     </RLink>
