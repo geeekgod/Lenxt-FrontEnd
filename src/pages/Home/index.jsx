@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import landingImg from "../../assets/imgs/landing.png";
 import { getWindowDimensions } from "../../utils/getWidth";
+import io from "socket.io-client";
 
 const Home = () => {
   const theme = useTheme();
