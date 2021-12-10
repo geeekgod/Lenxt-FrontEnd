@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
@@ -18,6 +18,7 @@ import {
 } from "@mui/material";
 import { Link as RLink, useNavigate } from "react-router-dom";
 import { lenxtApi } from "../../api/lenxtApi";
+import { AuthActions } from "../../store/Actions/AuthActions";
 
 const SignIn = () => {
   const theme = useTheme();
@@ -31,6 +32,9 @@ const SignIn = () => {
   const [errPswd, setErrPswd] = useState(false);
   const [errMail, setErrMail] = useState(false);
   const [loginSuccess, setLoginSuccess] = useState(false);
+
+  // contexts
+  const { authLoginSuccess } = useContext(AuthActions);
 
   useEffect(() => {
     if (
@@ -68,10 +72,12 @@ const SignIn = () => {
           setLoginSuccess(false);
         }
         if (res.data.message && res.data.message?.message === "Logged in!!") {
+          const response = res.data.token;
           setErrorMsg(null);
           console.log(res.data);
           setLoginSuccess(true);
           setDisableLogin(true);
+          authLoginSuccess(response.uid, response["access-token"]);
         }
         setSubmit(false);
       })
