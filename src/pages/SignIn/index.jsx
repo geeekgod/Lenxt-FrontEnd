@@ -78,6 +78,7 @@ const SignIn = () => {
           setLoginSuccess(true);
           setDisableLogin(true);
           authLoginSuccess(response.uid, response["access-token"]);
+          navigate("/");
         }
         setSubmit(false);
       })

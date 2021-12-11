@@ -1,6 +1,39 @@
-a{
+a {
   text-decoration: none;
 }
 .button-custom {
   transition: all ease-in-out 0.6s !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #b8d1e0;
+  border-radius: 14px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #9cbed3;
+}
+
+.chat-Box-Scroller {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  max-height: 78.9vh;
+}
+.chat-Box-Scroller button {
+  height: 30px !important;
+  width: 30px !important;
+  border-radius: 50%;
 }

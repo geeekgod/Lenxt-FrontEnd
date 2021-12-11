@@ -2,7 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 
 const AuthContenxt = createContext();
 
-const AuthContenxtProvider = (props) => {
+const AuthContenxtProvider = ({ children }) => {
   const uidFetcher = () => {
     if (localStorage.getItem("uid")) {
       return parseInt(localStorage.getItem("uid"));
@@ -46,7 +46,7 @@ const AuthContenxtProvider = (props) => {
         localStorageSaver,
       }}
     >
-      {props.children}
+      {children}
     </AuthContenxt.Provider>
   );
 };

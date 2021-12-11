@@ -3,7 +3,7 @@ import { AuthContenxt } from "../Context/AuthContext";
 
 const AuthActions = createContext();
 
-const AuthActionsProvider = (props) => {
+const AuthActionsProvider = ({children}) => {
   const { setUid, setAccessToken, userP, setUserP, localStorageSaver } =
     useContext(AuthContenxt);
 
@@ -25,7 +25,7 @@ const AuthActionsProvider = (props) => {
 
   return (
     <AuthActions.Provider value={{ authLoginSuccess, authLogout }}>
-      {props.children}
+      {children}
     </AuthActions.Provider>
   );
 };
