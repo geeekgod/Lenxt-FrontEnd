@@ -4,6 +4,8 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { AuthContenxtProvider } from "./store/Context/AuthContext";
+import { AuthActionsProvider } from "./store/Actions/AuthActions";
 
 const theme = createTheme({
   palette: {
@@ -16,7 +18,11 @@ const theme = createTheme({
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <App />
+      <AuthContenxtProvider>
+        <AuthActionsProvider>
+          <App />
+        </AuthActionsProvider>
+      </AuthContenxtProvider>
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")
