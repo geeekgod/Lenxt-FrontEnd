@@ -11,6 +11,7 @@ const AuthActionsProvider = ({children}) => {
     setUid(uid);
     setAccessToken(accessToken);
     localStorageSaver(uid, accessToken);
+    setUserP(true);
   };
 
   const authLogout = () => {
