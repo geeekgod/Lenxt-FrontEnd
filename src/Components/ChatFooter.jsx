@@ -1,5 +1,5 @@
 import { Box, IconButton, InputBase, Paper } from "@mui/material";
-import React from "react";
+import React, { memo } from "react";
 import SendIcon from "@mui/icons-material/Send";
 
 const ChatFooter = () => {
@@ -42,4 +42,4 @@ const ChatFooter = () => {
   );
 };
 
-export default ChatFooter;
+export default memo(ChatFooter);

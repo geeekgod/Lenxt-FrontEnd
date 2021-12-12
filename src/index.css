@@ -4,7 +4,9 @@ a {
 .button-custom {
   transition: all ease-in-out 0.6s !important;
 }
-
+body {
+  margin: 0 !important;
+}
 /* width */
 ::-webkit-scrollbar {
   width: 7px;

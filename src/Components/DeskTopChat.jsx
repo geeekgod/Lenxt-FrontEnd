@@ -286,7 +286,7 @@ const DeskTopChat = React.memo(() => {
   };
 
   return (
-    <Box>
+    <Box sx={{ overflow: "hidden" }}>
       <NavBar />
       <Box>
         <Box
@@ -294,17 +294,17 @@ const DeskTopChat = React.memo(() => {
             flexGrow: 1,
             bgcolor: "background.paper",
             display: "flex",
-            height: "88.45vh",
+            height: "90.37vh",
           }}
         >
           <TabContext value={value}>
             <Tabs
-              orientation='vertical'
-              variant='scrollable'
+              orientation="vertical"
+              variant="scrollable"
               scrollButtons={false}
               value={value}
               onChange={handleChange}
-              aria-label='Chats'
+              aria-label="Chats"
               sx={{ borderRight: 1, borderColor: "divider" }}
             >
               {conversations &&
@@ -314,7 +314,7 @@ const DeskTopChat = React.memo(() => {
                     <Tab
                       key={index}
                       icon={<PersonIcon />}
-                      iconPosition='start'
+                      iconPosition="start"
                       label={conversation.userName}
                       value={index.toString()}
                       sx={{
