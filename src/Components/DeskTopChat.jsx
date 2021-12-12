@@ -9,44 +9,75 @@ import Chats from "./Chats";
 import { Tabs } from "@mui/material";
 
 const DeskTopChat = React.memo(() => {
+  document.title = "Lenxt Chat";
+
   const myId = "10";
   const [value, setValue] = React.useState("0");
-  const [conversations, setConversations] = React.useState([
+  const [profile, setProfile] = React.useState([
     {
-      id: "1",
-      userName: "John Doe",
+      _id: "1",
+      name: "John Doe",
     },
     {
-      id: "2",
-      userName: "Rishabh Singh",
+      _id: "2",
+      name: "Rishabh Singh",
     },
     {
-      id: "3",
-      userName: "Shreya Shet",
+      _id: "3",
+      name: "Shreya Shet",
     },
     {
-      id: "4",
-      userName: "Lol LOl LOl",
+      _id: "4",
+      name: "Lol LOl LOl",
     },
     {
-      id: "5",
-      userName: "Newbie",
+      _id: "5",
+      name: "Newbie",
     },
     {
-      id: "6",
-      userName: "Tester",
+      _id: "6",
+      name: "Tester",
     },
     {
-      id: "7",
-      userName: "React Org",
+      _id: "7",
+      name: "React Org",
     },
     {
-      id: "8",
-      userName: "No org",
+      _id: "8",
+      name: "No org",
     },
     {
-      id: "9",
-      userName: "Test Org",
+      _id: "9",
+      name: "Test Org",
+    },
+  ]);
+  const [contacts, setcontacts] = React.useState([
+    {
+      members: ["1", "10"],
+    },
+    {
+      members: ["2", "10"],
+    },
+    {
+      members: ["3", "10"],
+    },
+    {
+      members: ["4", "10"],
+    },
+    {
+      members: ["5", "10"],
+    },
+    {
+      members: ["6", "10"],
+    },
+    {
+      members: ["7", "10"],
+    },
+    {
+      members: ["8", "10"],
+    },
+    {
+      members: ["9", "10"],
     },
   ]);
 
@@ -73,7 +104,7 @@ const DeskTopChat = React.memo(() => {
           time: "13:47",
         },
         {
-          v: "1",
+          id: "1",
           name: "Joh Doe",
           message: "This is a test message",
           time: "13:47",
@@ -307,29 +338,43 @@ const DeskTopChat = React.memo(() => {
               aria-label="Chats"
               sx={{ borderRight: 1, borderColor: "divider" }}
             >
-              {conversations &&
-                conversations.map((conversation, index) => {
+              {contacts &&
+                contacts.map((contact, index) => {
                   console.log(index);
-                  return (
-                    <Tab
-                      key={index}
-                      icon={<PersonIcon />}
-                      iconPosition="start"
-                      label={conversation.userName}
-                      value={index.toString()}
-                      sx={{
-                        ml: 0,
-                        width: 300,
-                        justifyContent: "flex-start !important",
-                      }}
-                    />
+                  let contactId = contact.members.filter(
+                    (item) => item !== myId
                   );
+                  contactId = contactId[0];
+                  console.log(contactId);
+                  let profileId = profile.filter((pT) => pT._id === contactId);
+                  profileId = profileId[0];
+                  if (profileId) {
+                    return (
+                      <Tab
+                        key={index}
+                        icon={<PersonIcon />}
+                        iconPosition="start"
+                        label={profileId.name}
+                        value={index.toString()}
+                        sx={{
+                          ml: 0,
+                          width: 300,
+                          justifyContent: "flex-start !important",
+                        }}
+                      />
+                    );
+                  }
                 })}
             </Tabs>
-            {conversations &&
-              conversations.map((conversation, index) => {
+            {contacts &&
+              contacts.map((contact, index) => {
+                let contactId = contact.members.filter((item) => item !== myId);
+                contactId = contactId[0];
+                console.log(contactId);
+                let profileId = profile.filter((pT) => pT._id === contactId);
+                profileId = profileId[0];
                 let message = messages.filter((msg) => {
-                  return msg.clients.indexOf(conversation.id) !== -1;
+                  return msg.clients.indexOf(profileId._id) !== -1;
                 });
                 if (message[0]) {
                   message = message[0];
@@ -340,11 +385,7 @@ const DeskTopChat = React.memo(() => {
                     sx={{ width: "100%", paddingBottom: 1, p: 0 }}
                     value={index.toString()}
                   >
-                    <Chats
-                      conversation={conversation}
-                      message={message}
-                      myId={myId}
-                    />
+                    <Chats message={message} myId={myId} />
                   </TabPanel>
                 );
               })}

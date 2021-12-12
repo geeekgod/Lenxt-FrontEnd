@@ -3,7 +3,7 @@ import React, { memo } from "react";
 import ChatFooter from "./ChatFooter";
 import ScrollToBottom from "react-scroll-to-bottom";
 
-const Chats = ({ message, conversation, myId }) => {
+const Chats = ({ message, myId }) => {
   return (
     <Box
       sx={{
