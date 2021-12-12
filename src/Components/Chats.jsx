@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React, { memo } from "react";
 import ChatFooter from "./ChatFooter";
 import ScrollToBottom from "react-scroll-to-bottom";
@@ -11,6 +11,7 @@ const Chats = ({ message, conversation, myId }) => {
         flexDirection: "column",
         justifyContent: "space-between",
         minHeight: "100%",
+        backgroundColor: "transparent",
       }}
     >
       <Box>
@@ -36,13 +37,15 @@ const Chats = ({ message, conversation, myId }) => {
                             maxWidth: 350,
                           }}
                         >
-                          <p style={{ margin: 0, marginBottom: 4 }}>
-                            {msg.message}
-                          </p>
+                          <Typography variant="body2">{msg.message}</Typography>
                         </Box>
-                        <b style={{ fontSize: 10, textAlign: "right", mr: 2 }}>
-                          You
-                        </b>
+                        <Typography
+                          variant="body2"
+                          gutterBottom
+                          sx={{ fontSize: 10, textAlign: "right", mr: 1 }}
+                        >
+                          {msg.time}
+                        </Typography>
                       </Box>
                     </Box>
                   );
@@ -60,11 +63,15 @@ const Chats = ({ message, conversation, myId }) => {
                             maxWidth: 350,
                           }}
                         >
-                          <p style={{ margin: 0, marginBottom: 4 }}>
-                            {msg.message}
-                          </p>
+                          <Typography variant="body2">{msg.message}</Typography>
                         </Box>
-                        <b style={{ fontSize: 10 }}>{conversation.userName}</b>
+                        <Typography
+                          variant="body2"
+                          gutterBottom
+                          sx={{ fontSize: 10 }}
+                        >
+                          {msg.time}
+                        </Typography>
                       </Box>
                     </Box>
                   );
