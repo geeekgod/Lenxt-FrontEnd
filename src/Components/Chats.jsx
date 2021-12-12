@@ -1,9 +1,11 @@
 import { Box, Typography } from "@mui/material";
-import React, { memo } from "react";
+import React, { memo, useContext } from "react";
 import ChatFooter from "./ChatFooter";
 import ScrollToBottom from "react-scroll-to-bottom";
+import { ChatContext } from "../store/Context/ChatContext";
 
 const Chats = ({ message, myId }) => {
+  const { myProfile } = useContext(ChatContext);
   return (
     <Box
       sx={{
@@ -17,7 +19,7 @@ const Chats = ({ message, myId }) => {
       <Box>
         <ScrollToBottom className="chat-Box-Scroller">
           <Box sx={{ padding: "24px" }}>
-            {message &&
+            {message.length !== 0 &&
               message.messages.map((msg, index) => {
                 if (msg.id === myId) {
                   return (

@@ -6,21 +6,25 @@ import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
-import {
-  AuthContenxt,
-} from "./store/Context/AuthContext";
+import { ChatActionsProvider } from "./store/Actions/ChatActions";
+import { AuthContenxt } from "./store/Context/AuthContext";
+import { ChatContextProvider } from "./store/Context/ChatContext";
 
 const App = () => {
   const { uid, accessToken, userP } = useContext(AuthContenxt);
   if ((uid, accessToken, userP)) {
     return (
       <Router>
-        <Routes>
-          <Route exact path="/">
-            <Route index element={<DeskTopChat />} />
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
+        <ChatContextProvider>
+          <ChatActionsProvider>
+            <Routes>
+              <Route exact path="/">
+                <Route index element={<DeskTopChat />} />
+                <Route path="*" element={<NotFound />} />
+              </Route>
+            </Routes>
+          </ChatActionsProvider>
+        </ChatContextProvider>
       </Router>
     );
   } else {
