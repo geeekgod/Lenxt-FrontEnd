@@ -61,7 +61,13 @@ const NavBar = () => {
               <MenuItem sx={menuItemStyles} onClick={handleClose}>
                 My Profile
               </MenuItem>
-              <MenuItem sx={menuItemStyles} onClick={handleClose}>
+              <MenuItem
+                sx={menuItemStyles}
+                onClick={() => {
+                  handleClose();
+                  navigation("/add-contact");
+                }}
+              >
                 New Chat
               </MenuItem>
               <MenuItem sx={menuItemStyles} onClick={handleClose}>

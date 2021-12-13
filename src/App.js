@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import DeskTopChat from "./Components/DeskTopChat";
 import MobileChatComp from "./Components/MobileChatComp";
 import NotFound from "./pages/404";
+import AddNewContact from "./pages/AddNewContact";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import Home from "./pages/Home";
 import MobileChat from "./pages/MobileChat";
@@ -56,6 +57,7 @@ const App = () => {
                   <Route exact path="/">
                     <Route index element={<MobileChat />} />
                     <Route path="/chat" element={<MobileChatComp />} />
+                    <Route path="/add-contact" element={<AddNewContact />} />
                     <Route element={<NotFound />} />
                   </Route>
                 </Routes>
@@ -72,6 +74,7 @@ const App = () => {
               <Routes>
                 <Route exact path="/">
                   <Route index element={<DeskTopChat />} />
+                  <Route path="/add-contact" element={<AddNewContact />} />
                   <Route path="*" element={<NotFound />} />
                 </Route>
               </Routes>
