@@ -73,7 +73,13 @@ const NavBar = () => {
               <MenuItem sx={menuItemStyles} onClick={handleClose}>
                 Privacy Policy
               </MenuItem>
-              <MenuItem sx={menuItemStyles} onClick={handleClose}>
+              <MenuItem
+                sx={menuItemStyles}
+                onClick={() => {
+                  handleClose();
+                  navigation("/smart-lens");
+                }}
+              >
                 Smart Lens
               </MenuItem>
               <MenuItem
