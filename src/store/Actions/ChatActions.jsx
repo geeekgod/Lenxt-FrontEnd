@@ -9,7 +9,8 @@ const ChatActions = createContext();
 
 const ChatActionsProvider = ({ children }) => {
   const { uid, accessToken } = useContext(AuthContenxt);
-  const { setContacts, setProfiles, setMyProfile } = useContext(ChatContext);
+  const { setContacts, setProfiles, setMyProfile, setMessages } =
+    useContext(ChatContext);
   const { authLogout } = useContext(AuthActions);
   const navigate = useNavigate();
 
@@ -30,6 +31,41 @@ const ChatActionsProvider = ({ children }) => {
       .catch((err) => console.log(err));
   };
 
+  const messagesFetcher = () => {
+    lenxtApi
+      .get("/messages", {
+        headers: { uid: uid, "access-token": accessToken },
+      })
+      .then((res) => {
+        if (res.data.messages) {
+          setMessages(res.data.messages);
+        }
+        if (res.data.msg === "user not found please authenticate") {
+          navigate("/auth/signin");
+          authLogout();
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const sendMessage = (data, clientId) => {
+    lenxtApi
+      .post(
+        "/messages/addMessage",
+        { msgData: data, clientId: clientId },
+        {
+          headers: { uid: uid, "access-token": accessToken },
+        }
+      )
+      .then((res) => {
+        if (res.data.msg === "user not found please authenticate") {
+          navigate("/auth/signin");
+          authLogout();
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
   const myProfileFetcher = () => {
     lenxtApi
       .get("/profiles/me", {
@@ -38,6 +74,7 @@ const ChatActionsProvider = ({ children }) => {
       .then((res) => {
         if (res.data.profile) {
           setMyProfile(res.data.profile);
+          messagesFetcher();
         }
         if (res.data.msg === "user not found please authenticate") {
           navigate("/auth/signin");
@@ -71,7 +108,7 @@ const ChatActionsProvider = ({ children }) => {
   }, []);
 
   return (
-    <ChatActions.Provider value={{ contactsFetcher }}>
+    <ChatActions.Provider value={{ sendMessage }}>
       {children}
     </ChatActions.Provider>
   );
