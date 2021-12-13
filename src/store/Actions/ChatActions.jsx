@@ -108,7 +108,9 @@ const ChatActionsProvider = ({ children }) => {
   }, []);
 
   return (
-    <ChatActions.Provider value={{ sendMessage }}>
+    <ChatActions.Provider
+      value={{ sendMessage, contactsFetcher, messagesFetcher }}
+    >
       {children}
     </ChatActions.Provider>
   );
