@@ -4,7 +4,7 @@ import ChatFooter from "./ChatFooter";
 import ScrollToBottom from "react-scroll-to-bottom";
 import { ChatContext } from "../store/Context/ChatContext";
 
-const Chats = ({ message, myId, clientId }) => {
+const Chats = ({ message, myMail, clientMail }) => {
   return (
     <Box
       sx={{
@@ -20,7 +20,7 @@ const Chats = ({ message, myId, clientId }) => {
           <Box sx={{ padding: "24px" }}>
             {message.length !== 0 &&
               message.messages.map((msg, index) => {
-                if (msg.id === myId) {
+                if (msg.email === myMail) {
                   return (
                     <Box
                       key={index}
@@ -81,7 +81,7 @@ const Chats = ({ message, myId, clientId }) => {
           </Box>
         </ScrollToBottom>
       </Box>
-      <ChatFooter clientId={clientId} />
+      <ChatFooter clientMail={clientMail} />
     </Box>
   );
 };

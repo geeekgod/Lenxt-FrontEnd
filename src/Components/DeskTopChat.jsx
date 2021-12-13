@@ -19,7 +19,7 @@ const DeskTopChat = React.memo(() => {
     setValue(newValue);
   };
 
-  if ((myProfile?._id, messages, contacts, profiles)) {
+  if ((myProfile?.email, messages, contacts, profiles)) {
     return (
       <Box sx={{ overflow: "hidden" }}>
         <NavBar />
@@ -45,13 +45,12 @@ const DeskTopChat = React.memo(() => {
                 {contacts &&
                   contacts.map((contact, index) => {
                     console.log(index);
-                    let contactId = contact.members.filter(
-                      (item) => item !== myProfile?._id
+                    let contactMail = contact.members.filter(
+                      (item) => item !== myProfile?.email
                     );
-                    contactId = contactId[0];
-                    console.log(contactId);
+                    contactMail = contactMail[0];
                     let profileId = profiles.filter(
-                      (pT) => pT._id === contactId
+                      (pT) => pT.email === contactMail
                     );
                     profileId = profileId[0];
                     if (profileId) {
@@ -74,14 +73,14 @@ const DeskTopChat = React.memo(() => {
               </Tabs>
               {contacts &&
                 contacts.map((contact, index) => {
-                  let contactId = contact.members.filter(
-                    (item) => item !== myProfile?._id
+                  let contactMail = contact.members.filter(
+                    (item) => item !== myProfile?.email
                   );
-                  contactId = contactId[0];
-                  let profileId = profiles.filter((pT) => pT._id === contactId);
+                  contactMail = contactMail[0];
+                  let profileId = profiles.filter((pT) => pT.email === contactMail);
                   profileId = profileId[0];
                   let message = messages.filter((msg) => {
-                    return msg.members.indexOf(profileId._id) !== -1;
+                    return msg.members.indexOf(profileId.email) !== -1;
                   });
                   if (message[0]) {
                     message = message[0];
@@ -94,8 +93,8 @@ const DeskTopChat = React.memo(() => {
                     >
                       <Chats
                         message={message}
-                        myId={myProfile?._id}
-                        clientId={profileId?._id}
+                        myMail={myProfile?.email}
+                        clientMail={profileId?.email}
                       />
                     </TabPanel>
                   );

@@ -4,17 +4,17 @@ const MobileContext = createContext();
 
 const MobileContextProvider = ({ children }) => {
   const [messages, setMessages] = useState();
-  const [myId, setMyId] = useState("");
-  const [clientId, setClientId] = useState("");
+  const [myMail, setMyMail] = useState("");
+  const [clientMail, setClientMail] = useState("");
 
   return (
     <MobileContext.Provider
       value={{
         messages,
-        myId,
-        clientId,
-        setClientId,
-        setMyId,
+        myMail,
+        clientMail,
+        setClientMail,
+        setMyMail,
         setMessages,
       }}
     >
