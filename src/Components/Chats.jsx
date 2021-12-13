@@ -4,8 +4,7 @@ import ChatFooter from "./ChatFooter";
 import ScrollToBottom from "react-scroll-to-bottom";
 import { ChatContext } from "../store/Context/ChatContext";
 
-const Chats = ({ message, myId }) => {
-  const { myProfile } = useContext(ChatContext);
+const Chats = ({ message, myId, clientId }) => {
   return (
     <Box
       sx={{
@@ -82,7 +81,7 @@ const Chats = ({ message, myId }) => {
           </Box>
         </ScrollToBottom>
       </Box>
-      <ChatFooter />
+      <ChatFooter clientId={clientId} />
     </Box>
   );
 };
