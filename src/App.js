@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import MobileChat from "./pages/MobileChat";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import SmartLens from "./pages/SmartLens";
 import { ChatActionsProvider } from "./store/Actions/ChatActions";
 import { AuthContenxt } from "./store/Context/AuthContext";
 import { ChatContextProvider } from "./store/Context/ChatContext";
@@ -58,6 +59,7 @@ const App = () => {
                     <Route index element={<MobileChat />} />
                     <Route path="/chat" element={<MobileChatComp />} />
                     <Route path="/add-contact" element={<AddNewContact />} />
+                    <Route path="/smart-lens" element={<SmartLens />} />
                     <Route element={<NotFound />} />
                   </Route>
                 </Routes>
@@ -75,6 +77,7 @@ const App = () => {
                 <Route exact path="/">
                   <Route index element={<DeskTopChat />} />
                   <Route path="/add-contact" element={<AddNewContact />} />
+                  <Route path="/smart-lens" element={<SmartLens />} />
                   <Route path="*" element={<NotFound />} />
                 </Route>
               </Routes>
