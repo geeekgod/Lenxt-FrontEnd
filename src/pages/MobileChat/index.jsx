@@ -13,11 +13,12 @@ const MobileChat = React.memo(() => {
   const { contacts, profiles, myProfile, messages } =
     React.useContext(ChatContext);
 
-  const { setClientId, setMyId, setMessages } = React.useContext(MobileContext);
+  const { setClientMail, setMyMail, setMessages } =
+    React.useContext(MobileContext);
   const theme = useTheme();
 
   const navigate = useNavigate();
-  if ((myProfile?._id, messages, contacts, profiles)) {
+  if ((myProfile?.email, messages, contacts, profiles)) {
     return (
       <Box sx={{ overflow: "hidden" }}>
         <NavBar />
@@ -36,14 +37,14 @@ const MobileChat = React.memo(() => {
               contacts.map((contact, index) => {
                 console.log(index);
                 let contactId = contact.members.filter(
-                  (item) => item !== myProfile?._id
+                  (item) => item !== myProfile?.email
                 );
                 contactId = contactId[0];
                 console.log(contactId);
-                let profileId = profiles.filter((pT) => pT._id === contactId);
+                let profileId = profiles.filter((pT) => pT.email === contactId);
                 profileId = profileId[0];
                 let message = messages.filter((msg) => {
-                  return msg.members.indexOf(profileId._id) !== -1;
+                  return msg.members.indexOf(profileId.email) !== -1;
                 });
                 if (message[0]) {
                   message = message[0];
@@ -52,8 +53,8 @@ const MobileChat = React.memo(() => {
                   return (
                     <Box
                       onClick={() => {
-                        setClientId(profileId?._id);
-                        setMyId(myProfile?._id);
+                        setClientMail(profileId?.email);
+                        setMyMail(myProfile?.email);
                         setMessages(message.messages);
                         navigate("/chat");
                       }}

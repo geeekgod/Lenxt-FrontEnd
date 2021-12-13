@@ -48,11 +48,11 @@ const ChatActionsProvider = ({ children }) => {
       .catch((err) => console.log(err));
   };
 
-  const sendMessage = (data, clientId) => {
+  const sendMessage = (data, clientMail) => {
     lenxtApi
       .post(
         "/messages/addMessage",
-        { msgData: data, clientId: clientId },
+        { msgData: data, clientMail: clientMail },
         {
           headers: { uid: uid, "access-token": accessToken },
         }

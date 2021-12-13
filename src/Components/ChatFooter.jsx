@@ -4,7 +4,7 @@ import SendIcon from "@mui/icons-material/Send";
 import { ChatActions } from "../store/Actions/ChatActions";
 import { ChatContext } from "../store/Context/ChatContext";
 
-const ChatFooter = ({ clientId }) => {
+const ChatFooter = ({ clientMail }) => {
   const { myProfile } = useContext(ChatContext);
   const { sendMessage } = useContext(ChatActions);
 
@@ -13,7 +13,7 @@ const ChatFooter = ({ clientId }) => {
   const sendMsg = () => {
     if (text !== "" && text !== " ") {
       const msgData = {
-        id: myProfile._id,
+        email: myProfile.email,
         name: myProfile.name,
         message: text,
         time:
@@ -21,7 +21,7 @@ const ChatFooter = ({ clientId }) => {
           ":" +
           new Date(Date.now()).getMinutes(),
       };
-      sendMessage(msgData, clientId);
+      sendMessage(msgData, clientMail);
     }
   };
 

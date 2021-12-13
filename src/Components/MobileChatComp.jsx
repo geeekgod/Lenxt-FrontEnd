@@ -7,16 +7,16 @@ import { useNavigate } from "react-router";
 import NavBar from "./NavBar";
 
 const MobileChatComp = () => {
-  const { messages, myId, clientId } = useContext(MobileContext);
+  const { messages, myMail, clientMail } = useContext(MobileContext);
   const navigate = useNavigate();
   useEffect(() => {
     setTimeout(() => {
-      if (messages === undefined && myId === "" && clientId === "") {
+      if (messages === undefined && myMail === "" && clientMail === "") {
         navigate("/");
       }
     }, 2000);
   }, []);
-  if ((messages !== undefined, myId, clientId)) {
+  if ((messages !== undefined, myMail, clientMail)) {
     return (
       <Box
         sx={{
@@ -34,7 +34,7 @@ const MobileChatComp = () => {
             <Box sx={{ padding: "24px" }}>
               {messages.length !== 0 &&
                 messages.map((msg, index) => {
-                  if (msg.id === myId) {
+                  if (msg.email === myMail) {
                     return (
                       <Box
                         key={index}
@@ -99,7 +99,7 @@ const MobileChatComp = () => {
             </Box>
           </ScrollToBottom>
         </Box>
-        <ChatFooter clientId={clientId} />
+        <ChatFooter clientMail={clientMail} />
       </Box>
     );
   } else {
