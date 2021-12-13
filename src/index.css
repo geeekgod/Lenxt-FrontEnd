@@ -34,6 +34,9 @@ body {
   overflow: auto;
   max-height: 78.9vh;
 }
+.chat-Box-Scroller.mobile {
+  max-height: 83.267vh !important;
+}
 .chat-Box-Scroller button {
   height: 30px !important;
   width: 30px !important;

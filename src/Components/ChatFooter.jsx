@@ -39,6 +39,8 @@ const ChatFooter = ({ clientId }) => {
         alignItems: "center",
         backgroundColor: "#DCC6FA",
         p: 0.4,
+        marginTop: "auto",
+        marginBottom: 0,
       }}
     >
       <Paper
