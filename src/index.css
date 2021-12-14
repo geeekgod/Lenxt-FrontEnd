@@ -31,7 +31,8 @@ body {
 .chat-Box-Scroller {
   display: flex;
   flex-direction: column;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   max-height: 78.9vh;
 }
 .chat-Box-Scroller.mobile {
