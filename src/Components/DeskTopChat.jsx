@@ -5,7 +5,6 @@ import TabContext from "@mui/lab/TabContext";
 import TabPanel from "@mui/lab/TabPanel";
 import PersonIcon from "@mui/icons-material/Person";
 import NavBar from "./NavBar";
-// import Chats from "./Chats";
 import { Tabs } from "@mui/material";
 import { ChatContext } from "../store/Context/ChatContext";
 import Loader from "./Loader";
@@ -110,7 +109,7 @@ const DeskTopChat = React.memo(() => {
       </Box>
     );
   } else {
-    return null;
+    return <Loader />;
   }
 });
 

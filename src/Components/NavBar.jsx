@@ -9,11 +9,14 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { AuthActions } from "../store/Actions/AuthActions";
 import { useNavigate } from "react-router";
+import { ChatContext } from "../store/Context/ChatContext";
 
 const NavBar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { authLogout } = useContext(AuthActions);
   const navigation = useNavigate();
+
+  const { myProfile } = useContext(ChatContext);
 
   const menuItemStyles = { width: 200, justifyContent: "center" };
 
@@ -58,8 +61,11 @@ const NavBar = () => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem sx={menuItemStyles} onClick={handleClose}>
-                My Profile
+              <MenuItem
+                sx={[menuItemStyles, { color: "#7F33EB" }]}
+                onClick={handleClose}
+              >
+                {myProfile.name}
               </MenuItem>
               <MenuItem
                 sx={menuItemStyles}
@@ -70,9 +76,6 @@ const NavBar = () => {
               >
                 New Chat
               </MenuItem>
-              <MenuItem sx={menuItemStyles} onClick={handleClose}>
-                Privacy Policy
-              </MenuItem>
               <MenuItem
                 sx={menuItemStyles}
                 onClick={() => {
@@ -81,6 +84,15 @@ const NavBar = () => {
                 }}
               >
                 Smart Lens
+              </MenuItem>
+              <MenuItem
+                sx={menuItemStyles}
+                onClick={() => {
+                  handleClose();
+                  navigation("/about-us");
+                }}
+              >
+                About Us
               </MenuItem>
               <MenuItem
                 sx={menuItemStyles}

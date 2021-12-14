@@ -67,10 +67,10 @@ const Home = () => {
                 component="div"
                 sx={{ fontWeight: 600, color: "#3867A8" }}
               >
-                Video Chat with smart lens
+                Converse. Chat. Connect
               </Typography>
               <Typography variant="h4" component="h5" gutterBottom>
-                Chat, Call securely & discover the world with{" "}
+                Chat & discover the world with{" "}
                 <b
                   style={{ fontWeight: 600, color: theme.palette.primary.main }}
                 >
@@ -78,9 +78,9 @@ const Home = () => {
                 </b>
               </Typography>
               <Typography variant="subtitle1" gutterBottom component="div">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut
-                eligendi minima non et consequuntur repellendus. Aperiam
-                consectetur amet nemo maxime molestias rem praesentium.
+                Smart application for smart users.connect with ur close ones
+                through lenxt. Getting started with computer vision. Lenxt
+                provides u the speed and ease you need
               </Typography>
               <Button
                 variant="contained"

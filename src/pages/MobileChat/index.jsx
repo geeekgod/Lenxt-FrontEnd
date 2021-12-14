@@ -7,6 +7,7 @@ import { Divider, Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { useNavigate } from "react-router-dom";
 import { MobileContext } from "../../store/Context/MobileContext";
+import Loader from "../../Components/Loader";
 
 const MobileChat = React.memo(() => {
   document.title = "Lenxt Chat";
@@ -94,7 +95,7 @@ const MobileChat = React.memo(() => {
       </Box>
     );
   } else {
-    return null;
+    return <Loader />;
   }
 });
 
