@@ -13,7 +13,7 @@ const MobileChat = React.memo(() => {
   const { contacts, profiles, myProfile, messages } =
     React.useContext(ChatContext);
 
-  const { setClientMail, setMyMail, setMessages } =
+  const { setClientMail, setMyMail, setMessagesMob } =
     React.useContext(MobileContext);
   const theme = useTheme();
 
@@ -55,7 +55,7 @@ const MobileChat = React.memo(() => {
                       onClick={() => {
                         setClientMail(profileId?.email);
                         setMyMail(myProfile?.email);
-                        setMessages(message.messages);
+                        setMessagesMob(message.messages);
                         navigate("/chat");
                       }}
                     >

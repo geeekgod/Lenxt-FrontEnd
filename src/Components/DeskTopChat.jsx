@@ -5,9 +5,11 @@ import TabContext from "@mui/lab/TabContext";
 import TabPanel from "@mui/lab/TabPanel";
 import PersonIcon from "@mui/icons-material/Person";
 import NavBar from "./NavBar";
-import Chats from "./Chats";
+// import Chats from "./Chats";
 import { Tabs } from "@mui/material";
 import { ChatContext } from "../store/Context/ChatContext";
+import Loader from "./Loader";
+const Chats = React.lazy(() => import("./Chats.jsx"));
 
 const DeskTopChat = React.memo(() => {
   document.title = "Lenxt Chat";
@@ -77,7 +79,9 @@ const DeskTopChat = React.memo(() => {
                     (item) => item !== myProfile?.email
                   );
                   contactMail = contactMail[0];
-                  let profileId = profiles.filter((pT) => pT.email === contactMail);
+                  let profileId = profiles.filter(
+                    (pT) => pT.email === contactMail
+                  );
                   profileId = profileId[0];
                   let message = messages.filter((msg) => {
                     return msg.members.indexOf(profileId.email) !== -1;
@@ -91,11 +95,12 @@ const DeskTopChat = React.memo(() => {
                       sx={{ width: "100%", paddingBottom: 1, p: 0 }}
                       value={index.toString()}
                     >
-                      <Chats
-                        message={message}
-                        myMail={myProfile?.email}
-                        clientMail={profileId?.email}
-                      />
+                      <React.Suspense fallback={<Loader />}>
+                        <Chats
+                          myMail={myProfile?.email}
+                          clientMail={profileId?.email}
+                        />
+                      </React.Suspense>
                     </TabPanel>
                   );
                 })}
