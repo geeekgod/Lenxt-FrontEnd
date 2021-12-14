@@ -53,7 +53,10 @@ const Chats = ({ myMail, clientMail }) => {
                               maxWidth: 350,
                             }}
                           >
-                            <Typography variant="body2">
+                            <Typography
+                              variant="body2"
+                              sx={{ wordBreak: "break-all" }}
+                            >
                               {msg.message}
                             </Typography>
                           </Box>
@@ -81,7 +84,10 @@ const Chats = ({ myMail, clientMail }) => {
                               maxWidth: 350,
                             }}
                           >
-                            <Typography variant="body2">
+                            <Typography
+                              variant="body2"
+                              sx={{ wordBreak: "break-all" }}
+                            >
                               {msg.message}
                             </Typography>
                           </Box>
