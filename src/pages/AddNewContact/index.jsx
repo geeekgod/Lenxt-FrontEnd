@@ -13,6 +13,7 @@ import { useNavigate } from "react-router";
 import { lenxtApi } from "../../api/lenxtApi";
 import { ChatActions } from "../../store/Actions/ChatActions";
 import { AuthContenxt } from "../../store/Context/AuthContext";
+import { SocketContext } from "../../store/Context/SocketContext";
 
 const AddNewContact = () => {
   document.title = "Add to contacts | Lenxt App";
@@ -20,6 +21,7 @@ const AddNewContact = () => {
   const [serverMsg, setServerMsg] = useState("");
   const { uid, accessToken } = useContext(AuthContenxt);
   const { contactsFetcher, messagesFetcher } = useContext(ChatActions);
+  const { socket } = useContext(SocketContext);
 
   const [searchEmail, setSearchEmail] = useState("");
   const [errMail, setErrMail] = useState(false);
@@ -104,6 +106,13 @@ const AddNewContact = () => {
         break;
       case "contact created":
         setErrMail(false);
+        let data = {
+          headers: { uid: uid, "access-token": accessToken },
+          body: {
+            clientMail: searchEmail,
+          },
+        };
+        socket.emit("addContact", data);
         contactsFetcher();
         messagesFetcher();
         setTimeout(() => {

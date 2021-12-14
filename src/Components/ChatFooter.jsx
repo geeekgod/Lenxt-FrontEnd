@@ -3,10 +3,14 @@ import React, { memo, useContext, useState } from "react";
 import SendIcon from "@mui/icons-material/Send";
 import { ChatActions } from "../store/Actions/ChatActions";
 import { ChatContext } from "../store/Context/ChatContext";
+import { SocketContext } from "../store/Context/SocketContext";
+import { AuthContenxt } from "../store/Context/AuthContext";
 
 const ChatFooter = ({ clientMail }) => {
   const { myProfile } = useContext(ChatContext);
   const { sendMessage } = useContext(ChatActions);
+  const { socket } = useContext(SocketContext);
+  const { uid, accessToken } = useContext(AuthContenxt);
 
   const [text, setText] = useState("");
 
@@ -22,6 +26,17 @@ const ChatFooter = ({ clientMail }) => {
           new Date(Date.now()).getMinutes(),
       };
       sendMessage(msgData, clientMail);
+      const socketData = {
+        headers: {
+          uid: uid,
+          "access-token": accessToken,
+        },
+        body: {
+          clientMail: clientMail,
+          msgData: msgData,
+        },
+      };
+      socket.emit("send_message", socketData);
     }
   };
 
