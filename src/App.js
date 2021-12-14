@@ -16,6 +16,7 @@ import { ChatContextProvider } from "./store/Context/ChatContext";
 import { MobileContextProvider } from "./store/Context/MobileContext";
 import { getWindowDimensions } from "./utils/getWidth";
 
+
 const App = () => {
   const { uid, accessToken, userP } = useContext(AuthContenxt);
   const [windowDimensions, setWindowDimensions] = useState(
@@ -59,6 +60,8 @@ const App = () => {
                     <Route index element={<MobileChat />} />
                     <Route path="/chat" element={<MobileChatComp />} />
                     <Route path="/add-contact" element={<AddNewContact />} />
+                    {/*  */}
+                   
                     <Route path="/smart-lens" element={<SmartLens />} />
                     <Route element={<NotFound />} />
                   </Route>
