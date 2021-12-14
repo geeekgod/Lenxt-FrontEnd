@@ -9,6 +9,7 @@ import Chats from "./Chats";
 import { Tabs } from "@mui/material";
 import { ChatContext } from "../store/Context/ChatContext";
 import AddUser from "./AddUser";
+import Loader from "./Loader";
 
 const DeskTopChat = React.memo(() => {
   document.title = "Lenxt Chat";
@@ -36,17 +37,16 @@ const DeskTopChat = React.memo(() => {
             >
               <TabContext value={value}>
                 <Tabs
-                  orientation='vertical'
-                  variant='scrollable'
+                  orientation="vertical"
+                  variant="scrollable"
                   scrollButtons={false}
                   value={value}
                   onChange={handleChange}
-                  aria-label='Chats'
+                  aria-label="Chats"
                   sx={{ borderRight: 1, borderColor: "divider" }}
                 >
                   {contacts &&
                     contacts.map((contact, index) => {
-                      console.log(index);
                       let contactMail = contact.members.filter(
                         (item) => item !== myProfile?.email
                       );
@@ -60,7 +60,7 @@ const DeskTopChat = React.memo(() => {
                           <Tab
                             key={index}
                             icon={<PersonIcon />}
-                            iconPosition='start'
+                            iconPosition="start"
                             label={profileId.name}
                             value={index.toString()}
                             sx={{
@@ -117,7 +117,11 @@ const DeskTopChat = React.memo(() => {
       );
     }
   } else {
-    return null;
+    return (
+      <Box sx={{ height: "100vh", display: "flex", alignItems: "center" }}>
+        <Loader />
+      </Box>
+    );
   }
 });
 

@@ -11,7 +11,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import landingImg from "../../assets/imgs/landing.png";
 import { getWindowDimensions } from "../../utils/getWidth";
-import io from "socket.io-client";
 
 const Home = () => {
   const theme = useTheme();
@@ -67,11 +66,10 @@ const Home = () => {
                 component="div"
                 sx={{ fontWeight: 600, color: "#3867A8" }}
               >
-                 Chat with smart lens
+                Converse. Chat. Connect
               </Typography>
               <Typography variant="h4" component="h5" gutterBottom>
-                Chat  & discover the world with{" "}
-                {/* Call securely */}
+                Chat & discover the world with{" "}
                 <b
                   style={{ fontWeight: 600, color: theme.palette.primary.main }}
                 >
@@ -79,10 +77,9 @@ const Home = () => {
                 </b>
               </Typography>
               <Typography variant="subtitle1" gutterBottom component="div">
-               Connect with your close ones through {" "}
-               Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
-               Id quasi quisquam omnis sit. Deleniti quis esse fuga 
-               
+                Smart application for smart users.connect with ur close ones
+                through lenxt. Getting started with computer vision. Lenxt
+                provides u the speed and ease you need
               </Typography>
               <Button
                 variant="contained"

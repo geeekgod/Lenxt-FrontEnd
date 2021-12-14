@@ -70,7 +70,6 @@ const AddNewContact = () => {
   const handleSubmit = (e) => {
     setErrMail(false);
     e.preventDefault();
-    console.log(uid, accessToken);
     lenxtApi
       .post(
         "contacts/addNew",
@@ -88,7 +87,6 @@ const AddNewContact = () => {
         console.log(err);
         setSubmit(false);
       });
-    console.log(serverMsg);
   };
 
   useEffect(() => {

@@ -93,7 +93,6 @@ const SignUp = () => {
         if (res.data.message && res.data.message === "User Created") {
           const response = res.data.token;
           setErrorMsg(null);
-          console.log(res.data);
           setsignupSuccess(true);
           setDisableSignUp(true);
           setTimeout(() => {
@@ -101,7 +100,6 @@ const SignUp = () => {
             navigate("/");
           }, 2000);
         }
-        console.log(res.data);
         setSubmit(false);
       })
       .catch((err) => {

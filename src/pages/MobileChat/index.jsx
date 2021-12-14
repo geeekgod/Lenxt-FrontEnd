@@ -7,6 +7,7 @@ import { Divider, Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { useNavigate } from "react-router-dom";
 import { MobileContext } from "../../store/Context/MobileContext";
+import Loader from "../../Components/Loader";
 import AddUser from "../../Components/AddUser";
 
 const MobileChat = React.memo(() => {
@@ -14,7 +15,7 @@ const MobileChat = React.memo(() => {
   const { contacts, profiles, myProfile, messages } =
     React.useContext(ChatContext);
 
-  const { setClientMail, setMyMail, setMessages } =
+  const { setClientMail, setMyMail, setMessagesMob } =
     React.useContext(MobileContext);
   const theme = useTheme();
 
@@ -37,12 +38,10 @@ const MobileChat = React.memo(() => {
             >
               {contacts &&
                 contacts.map((contact, index) => {
-                  console.log(index);
                   let contactId = contact.members.filter(
                     (item) => item !== myProfile?.email
                   );
                   contactId = contactId[0];
-                  console.log(contactId);
                   let profileId = profiles.filter(
                     (pT) => pT.email === contactId
                   );
@@ -56,10 +55,11 @@ const MobileChat = React.memo(() => {
                   if (profileId) {
                     return (
                       <Box
+                        key={index}
                         onClick={() => {
                           setClientMail(profileId?.email);
                           setMyMail(myProfile?.email);
-                          setMessages(message.messages);
+                          setMessagesMob(message.messages);
                           navigate("/chat");
                         }}
                       >
@@ -71,12 +71,12 @@ const MobileChat = React.memo(() => {
                           }}
                         >
                           <AccountCircleIcon
-                            color='primary'
+                            color="primary"
                             sx={{ transform: "scale(1.5)", p: 1, mr: 1 }}
                           />
                           <Typography
-                            variant='h6'
-                            component='div'
+                            variant="h6"
+                            component="div"
                             sx={{ color: "#343434" }}
                           >
                             {profileId.name}
@@ -106,7 +106,11 @@ const MobileChat = React.memo(() => {
       );
     }
   } else {
-    return null;
+    return (
+      <Box sx={{ height: "100vh", display: "flex", alignItems: "center" }}>
+        <Loader />
+      </Box>
+    );
   }
 });
 

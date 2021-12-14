@@ -218,7 +218,6 @@ const ForgotPassword = () => {
       })
       .then((res) => {
         if (res.data.msg) {
-          console.log(res.data.msg);
           setServerMsg(res.data.msg);
           setDisableReset(true);
         }
@@ -278,7 +277,6 @@ const ForgotPassword = () => {
         userCheckMeth();
         break;
     }
-    console.log(serverMsg);
     alertMeth();
   };
 

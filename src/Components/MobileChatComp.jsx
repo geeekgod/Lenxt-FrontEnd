@@ -5,6 +5,7 @@ import ScrollToBottom from "react-scroll-to-bottom";
 import { MobileContext } from "../store/Context/MobileContext";
 import { useNavigate } from "react-router";
 import NavBar from "./NavBar";
+import Loader from "./Loader";
 
 const MobileChatComp = () => {
   const { messagesMob, myMail, clientMail } = useContext(MobileContext);
@@ -51,7 +52,10 @@ const MobileChatComp = () => {
                               maxWidth: 350,
                             }}
                           >
-                            <Typography variant="body2">
+                            <Typography
+                              variant="body2"
+                              sx={{ wordBreak: "break-all" }}
+                            >
                               {msg.message}
                             </Typography>
                           </Box>
@@ -79,7 +83,10 @@ const MobileChatComp = () => {
                               maxWidth: 350,
                             }}
                           >
-                            <Typography variant="body2">
+                            <Typography
+                              variant="body2"
+                              sx={{ wordBreak: "break-all" }}
+                            >
                               {msg.message}
                             </Typography>
                           </Box>
@@ -102,7 +109,11 @@ const MobileChatComp = () => {
       </Box>
     );
   } else {
-    return null;
+    return (
+      <Box sx={{ height: "100vh", display: "flex", alignItems: "center" }}>
+        <Loader />
+      </Box>
+    );
   }
 };
 

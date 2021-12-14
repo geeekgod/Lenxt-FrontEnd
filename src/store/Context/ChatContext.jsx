@@ -8,12 +8,6 @@ const ChatContextProvider = ({ children }) => {
   const [messages, setMessages] = useState([]);
   const [myProfile, setMyProfile] = useState([]);
 
-  useEffect(() => {
-    console.log("contacts: ", contacts);
-    console.log("profiles: ", profiles);
-    console.log("myProfile: ", myProfile);
-    console.log("messages: ", messages);
-  }, [contacts, profiles, myProfile, messages]);
   return (
     <ChatContext.Provider
       value={{
