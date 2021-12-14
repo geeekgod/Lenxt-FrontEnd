@@ -213,7 +213,7 @@ const AddNewContact = () => {
                     autoFocus
                     value={searchEmail}
                     onChange={(e) => {
-                      setSearchEmail(e.target.value);
+                      setSearchEmail(e.target.value.toLowerCase());
                       if (errMail === true) {
                         setErrMail(false);
                       }
