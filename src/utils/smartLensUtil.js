@@ -9,7 +9,6 @@ export const drawRect = (detection, ctx) => {
     ctx.fillStyle = color;
     ctx.lineWidth = 2;
 
-    console.log(y);
     ctx.beginPath();
     ctx.fillText(text, x, y - 15);
     ctx.rect(x, y, width, height);

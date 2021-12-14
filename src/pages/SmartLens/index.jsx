@@ -31,7 +31,6 @@ const SmartLens = () => {
       canvasRef.current.width = videoWidth;
       canvasRef.current.height = videoHeight;
       const obj = await net.detect(video);
-      console.log(obj);
 
       const ctx = canvasRef.current.getContext("2d");
 

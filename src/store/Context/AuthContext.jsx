@@ -27,13 +27,7 @@ const AuthContenxtProvider = ({ children }) => {
     localStorage.setItem("uid", uid);
     localStorage.setItem("access-token", accessToken);
   };
-
-  useEffect(() => {
-    console.log("uid:", uid);
-    console.log("access-token", accessToken);
-    console.log("user present:", userP);
-  }, [uid, accessToken, userP]);
-
+  
   return (
     <AuthContenxt.Provider
       value={{

@@ -12,7 +12,6 @@ const Chats = ({ myMail, clientMail }) => {
       return msg.members.indexOf(clientMail) !== -1;
     })
   );
-  console.log(messageCon);
   useEffect(() => {
     setMessageCon(
       messages.find((msg) => {

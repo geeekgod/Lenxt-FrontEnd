@@ -68,13 +68,11 @@ const SignIn = () => {
         if (res.data.err && res.data.err === "Incorrect Password") {
           setErrorMsg("Incorrect Password");
           setErrPswd(true);
-          console.log(errorMsg);
           setLoginSuccess(false);
         }
         if (res.data.message && res.data.message?.message === "Logged in!!") {
           const response = res.data.token;
           setErrorMsg(null);
-          console.log(res.data);
           setLoginSuccess(true);
           setDisableLogin(true);
           setTimeout(() => {

@@ -47,7 +47,6 @@ const DeskTopChat = React.memo(() => {
                 >
                   {contacts &&
                     contacts.map((contact, index) => {
-                      console.log(index);
                       let contactMail = contact.members.filter(
                         (item) => item !== myProfile?.email
                       );
@@ -118,7 +117,11 @@ const DeskTopChat = React.memo(() => {
       );
     }
   } else {
-    return <Loader />;
+    return (
+      <Box sx={{ height: "100vh", display: "flex", alignItems: "center" }}>
+        <Loader />
+      </Box>
+    );
   }
 });
 

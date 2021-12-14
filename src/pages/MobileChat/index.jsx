@@ -38,12 +38,10 @@ const MobileChat = React.memo(() => {
             >
               {contacts &&
                 contacts.map((contact, index) => {
-                  console.log(index);
                   let contactId = contact.members.filter(
                     (item) => item !== myProfile?.email
                   );
                   contactId = contactId[0];
-                  console.log(contactId);
                   let profileId = profiles.filter(
                     (pT) => pT.email === contactId
                   );
