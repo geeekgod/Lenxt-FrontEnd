@@ -109,7 +109,11 @@ const MobileChatComp = () => {
       </Box>
     );
   } else {
-    return <Loader />;
+    return (
+      <Box sx={{ height: "100vh", display: "flex", alignItems: "center" }}>
+        <Loader />
+      </Box>
+    );
   }
 };
 

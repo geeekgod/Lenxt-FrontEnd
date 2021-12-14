@@ -44,8 +44,8 @@ const AboutUs = () => {
       <Container>
         <Grid container spacing={2} sx={{ justifyContent: "center" }}>
           {data &&
-            data.map((item, key) => (
-              <Grid item key={key} md={4}>
+            data.map((item, index) => (
+              <Grid item key={index} md={4}>
                 <TeamCards item={item} />
               </Grid>
             ))}
