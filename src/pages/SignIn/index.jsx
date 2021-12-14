@@ -77,8 +77,10 @@ const SignIn = () => {
           console.log(res.data);
           setLoginSuccess(true);
           setDisableLogin(true);
-          authLoginSuccess(response.uid, response["access-token"]);
-          navigate("/");
+          setTimeout(() => {
+            authLoginSuccess(response.uid, response["access-token"]);
+            navigate("/");
+          }, 2000);
         }
         setSubmit(false);
       })

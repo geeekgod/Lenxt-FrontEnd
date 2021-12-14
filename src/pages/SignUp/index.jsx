@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useContext, useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
@@ -20,6 +20,7 @@ import { Link as RLink, useNavigate } from "react-router-dom";
 import { getWindowDimensions } from "../../utils/getWidth";
 import { lenxtApi } from "../../api/lenxtApi";
 import { passStrengthChecker } from "../../utils/passStrengthChecker";
+import { AuthActions } from "../../store/Actions/AuthActions";
 
 const SignUp = () => {
   const theme = useTheme();
@@ -38,6 +39,8 @@ const SignUp = () => {
   const [errorMsg, setErrorMsg] = useState(null);
   const [passIsWeak, setPassIsWeak] = useState(false);
   const [stopSignUp, setStopSignUp] = useState(false);
+
+  const { authLoginSuccess } = useContext(AuthActions);
 
   useEffect(() => {
     const cnfPssLen = cnfPassword.length;
@@ -88,10 +91,15 @@ const SignUp = () => {
       })
       .then((res) => {
         if (res.data.message && res.data.message === "User Created") {
+          const response = res.data.token;
           setErrorMsg(null);
           console.log(res.data);
           setsignupSuccess(true);
           setDisableSignUp(true);
+          setTimeout(() => {
+            authLoginSuccess(response.uid, response["access-token"]);
+            navigate("/");
+          }, 2000);
         }
         console.log(res.data);
         setSubmit(false);

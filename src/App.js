@@ -14,6 +14,7 @@ import { ChatActionsProvider } from "./store/Actions/ChatActions";
 import { AuthContenxt } from "./store/Context/AuthContext";
 import { ChatContextProvider } from "./store/Context/ChatContext";
 import { MobileContextProvider } from "./store/Context/MobileContext";
+import { SocketContextProvider } from "./store/Context/SocketContext";
 import { getWindowDimensions } from "./utils/getWidth";
 
 
@@ -52,40 +53,44 @@ const App = () => {
     if (isMobile) {
       return (
         <Router>
-          <ChatContextProvider>
-            <ChatActionsProvider>
-              <MobileContextProvider>
-                <Routes>
-                  <Route exact path="/">
-                    <Route index element={<MobileChat />} />
-                    <Route path="/chat" element={<MobileChatComp />} />
-                    <Route path="/add-contact" element={<AddNewContact />} />
-                    {/*  */}
-                   
-                    <Route path="/smart-lens" element={<SmartLens />} />
-                    <Route element={<NotFound />} />
-                  </Route>
-                </Routes>
-              </MobileContextProvider>
-            </ChatActionsProvider>
-          </ChatContextProvider>
+          <SocketContextProvider>
+            <ChatContextProvider>
+              <ChatActionsProvider>
+                <MobileContextProvider>
+                  <Routes>
+                    <Route exact path="/">
+                      <Route index element={<MobileChat />} />
+                      <Route path="/chat" element={<MobileChatComp />} />
+                      <Route path="/add-contact" element={<AddNewContact />} />
+                      <Route path="/smart-lens" element={<SmartLens />} />
+                      <Route element={<NotFound />} />
+                    </Route>
+                  </Routes>
+                </MobileContextProvider>
+              </ChatActionsProvider>
+            </ChatContextProvider>
+          </SocketContextProvider>
         </Router>
       );
     } else {
       return (
         <Router>
-          <ChatContextProvider>
-            <ChatActionsProvider>
-              <Routes>
-                <Route exact path="/">
-                  <Route index element={<DeskTopChat />} />
-                  <Route path="/add-contact" element={<AddNewContact />} />
-                  <Route path="/smart-lens" element={<SmartLens />} />
-                  <Route path="*" element={<NotFound />} />
-                </Route>
-              </Routes>
-            </ChatActionsProvider>
-          </ChatContextProvider>
+          <SocketContextProvider>
+            <ChatContextProvider>
+              <ChatActionsProvider>
+                <Routes>
+                  <Route exact path="/">
+                    <Route index element={<DeskTopChat />} />
+                    <Route path="/add-contact" element={<AddNewContact />} />
+                    {/*  */}
+                   
+                    <Route path="/smart-lens" element={<SmartLens />} />
+                    <Route path="*" element={<NotFound />} />
+                  </Route>
+                </Routes>
+              </ChatActionsProvider>
+            </ChatContextProvider>
+          </SocketContextProvider>
         </Router>
       );
     }

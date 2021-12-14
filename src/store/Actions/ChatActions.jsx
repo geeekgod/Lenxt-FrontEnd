@@ -3,15 +3,17 @@ import { useNavigate } from "react-router";
 import { lenxtApi } from "../../api/lenxtApi";
 import { AuthContenxt } from "../Context/AuthContext";
 import { ChatContext } from "../Context/ChatContext";
+import { SocketContext } from "../Context/SocketContext";
 import { AuthActions } from "./AuthActions";
 
 const ChatActions = createContext();
 
 const ChatActionsProvider = ({ children }) => {
   const { uid, accessToken } = useContext(AuthContenxt);
-  const { setContacts, setProfiles, setMyProfile, setMessages } =
+  const { setContacts, setProfiles, setMyProfile, setMessages, messages } =
     useContext(ChatContext);
   const { authLogout } = useContext(AuthActions);
+  const { socket } = useContext(SocketContext);
   const navigate = useNavigate();
 
   const contactsFetcher = () => {
@@ -106,6 +108,27 @@ const ChatActionsProvider = ({ children }) => {
     myProfileFetcher();
     contactsFetcher();
   }, []);
+
+  useEffect(() => {
+    socket.on("receive_contacts", (data) => {
+      if (data.msg === "load_contacts") {
+        contactsFetcher();
+        messagesFetcher();
+      }
+    });
+
+    socket.on("receive_message", (data) => {
+      contactsFetcher();
+      messagesFetcher();
+    });
+
+    socket.on("message_sent", (data) => {
+      if (data.msg === "message added") {
+        contactsFetcher();
+        messagesFetcher();
+      }
+    });
+  }, [socket]);
 
   return (
     <ChatActions.Provider
