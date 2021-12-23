@@ -27,7 +27,7 @@ const NotFound = () => {
             }}
           >
             <Box>
-              <img src={notFoundImg} style={{ width: "90%" }} />
+              <img src={notFoundImg} alt="not found image" style={{ width: "90%" }} />
               <Typography variant="h5" component="h4" gutterBottom>
                 Oops, the page you are looking for can't be found!
               </Typography>
