@@ -113,7 +113,7 @@ const SignIn = () => {
             alignItems: "center",
           }}
         >
-          <img src={signInImg} style={{ width: "90%" }} alt={"Sign In Image"} />
+          <img src={signInImg} style={{ width: "90%" }} alt="Sign In Image" />
         </Grid>
         <Grid item md={6} sx={{ justifyContent: "center", margin: "auto" }}>
           <Container component="main" maxWidth="xs">

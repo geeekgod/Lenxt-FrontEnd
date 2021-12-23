@@ -361,7 +361,7 @@ const SignUp = () => {
             alignItems: "center",
           }}
         >
-          <img src={signUpImg} style={{ width: "90%" }} alt={"Sign Up image"} />
+          <img src={signUpImg} style={{ width: "90%" }} alt="Sign Up image" />
         </Grid>
       </Grid>
     </>

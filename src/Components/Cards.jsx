@@ -31,6 +31,7 @@ const TeamCards = ({ item }) => {
         >
           <img
             src={item.img}
+            alt="developer image"
             style={{
               width: 200,
               height: 200,
