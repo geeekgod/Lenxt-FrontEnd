@@ -1,15 +1,22 @@
 {
   "short_name": "Lenxt",
   "name": "Lenxt App",
+  "start_url": "./index.html",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "display": "standalone",
+  "prefer_related_applications": "false",
   "icons": [
     {
-      "src": "logo.png",
+      "src": "icon.png",
+      "sizes": "512x512",
       "type": "image/png",
-      "sizes": "512x512"
+      "purpose": "maskable any"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "1200x1200",
+      "type": "images/png"
     }
-  ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  ]
 }
