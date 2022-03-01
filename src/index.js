@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { AuthContenxtProvider } from "./store/Context/AuthContext";
 import { AuthActionsProvider } from "./store/Actions/AuthActions";
+import * as serviceWorker from "./serviceWorkerRegistration";
 
 const theme = createTheme({
   palette: {
@@ -27,6 +28,8 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById("root")
 );
+
+serviceWorker.register();
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

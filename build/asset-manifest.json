@@ -1,26 +1,30 @@
 {
   "files": {
-    "main.css": "/static/css/main.e14dee9e.chunk.css",
-    "main.js": "/static/js/main.019fd652.chunk.js",
-    "main.js.map": "/static/js/main.019fd652.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.f5008988.js",
-    "runtime-main.js.map": "/static/js/runtime-main.f5008988.js.map",
-    "static/js/2.dbd35731.chunk.js": "/static/js/2.dbd35731.chunk.js",
-    "static/js/2.dbd35731.chunk.js.map": "/static/js/2.dbd35731.chunk.js.map",
-    "static/js/3.10145eb9.chunk.js": "/static/js/3.10145eb9.chunk.js",
-    "static/js/3.10145eb9.chunk.js.map": "/static/js/3.10145eb9.chunk.js.map",
+    "main.css": "/static/css/main.5f4ee518.chunk.css",
+    "main.js": "/static/js/main.cc03bb2b.chunk.js",
+    "main.js.map": "/static/js/main.cc03bb2b.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.284b3b50.js",
+    "runtime-main.js.map": "/static/js/runtime-main.284b3b50.js.map",
+    "static/js/2.f0217947.chunk.js": "/static/js/2.f0217947.chunk.js",
+    "static/js/2.f0217947.chunk.js.map": "/static/js/2.f0217947.chunk.js.map",
+    "static/js/3.a6650ee2.chunk.js": "/static/js/3.a6650ee2.chunk.js",
+    "static/js/3.a6650ee2.chunk.js.map": "/static/js/3.a6650ee2.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.e14dee9e.chunk.css.map": "/static/css/main.e14dee9e.chunk.css.map",
-    "static/js/2.dbd35731.chunk.js.LICENSE.txt": "/static/js/2.dbd35731.chunk.js.LICENSE.txt",
+    "static/css/main.5f4ee518.chunk.css.map": "/static/css/main.5f4ee518.chunk.css.map",
+    "static/js/2.f0217947.chunk.js.LICENSE.txt": "/static/js/2.f0217947.chunk.js.LICENSE.txt",
+    "static/media/adduser.58935562.png": "/static/media/adduser.58935562.png",
+    "static/media/aditi_img.022ae668.jpeg": "/static/media/aditi_img.022ae668.jpeg",
     "static/media/landing.f4b87352.png": "/static/media/landing.f4b87352.png",
     "static/media/notfound.6f2dd420.png": "/static/media/notfound.6f2dd420.png",
+    "static/media/rishabh_img.61ea789e.jpg": "/static/media/rishabh_img.61ea789e.jpg",
+    "static/media/shreya_img.77022a07.jpeg": "/static/media/shreya_img.77022a07.jpeg",
     "static/media/signin.e624a083.png": "/static/media/signin.e624a083.png",
     "static/media/signup.e233af6a.png": "/static/media/signup.e233af6a.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.f5008988.js",
-    "static/js/2.dbd35731.chunk.js",
-    "static/css/main.e14dee9e.chunk.css",
-    "static/js/main.019fd652.chunk.js"
+    "static/js/runtime-main.284b3b50.js",
+    "static/js/2.f0217947.chunk.js",
+    "static/css/main.5f4ee518.chunk.css",
+    "static/js/main.cc03bb2b.chunk.js"
   ]
 }
