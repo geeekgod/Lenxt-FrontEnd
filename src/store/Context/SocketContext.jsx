@@ -5,7 +5,7 @@ import { AuthContenxt } from "./AuthContext";
 const SocketContext = createContext();
 
 const SocketContextProvider = ({ children }) => {
-  const socket = io.connect("https://lenxt-api.rishabhsingh-dev.me", {
+  const socket = io.connect("https://lenxt-api.onrender.com", {
     transports: ["websocket", "polling", "flashsocket"],
   });
 
