@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 export const lenxtApi = axios.create({
-  baseURL: "https://lenxt-api.onrender.com",
+  baseURL: API_URL,
 });
